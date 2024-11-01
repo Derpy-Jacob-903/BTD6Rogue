@@ -1,11 +1,11 @@
 ﻿namespace BTD6Rogue;
 
-public class PinkBloon : RogueBloon {
-    public override string BaseBloonId => "Pink";
+public class AquaBloon : RogueBloon {
+    public override string BaseBloonId => "XStablesMod-Aqua";
     public override int StartRound => 14;
     public override int EndRound => 30;
 
-	public override int BloonRbe => 5;
+	public override int BloonRbe => 8;
 
 	public override bool Camo => true;
     public override int CamoStartRound => 26;
@@ -13,6 +13,4 @@ public class PinkBloon : RogueBloon {
     public override bool Regrow => true;
     public override int RegrowStartRound => 16;
     public override int RegrowEndRound => 22;
-    public override bool Shielded => true;
-    public override bool Tattered => true;
 }

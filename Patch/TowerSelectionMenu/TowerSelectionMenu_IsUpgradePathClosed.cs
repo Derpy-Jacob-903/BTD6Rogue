@@ -17,9 +17,15 @@ internal static class TowerSelectionMenu_IsUpgradePathClosed {
 
         if (tower.GetUpgrade(path) == null) { return; }
 
-        if (tower.GetUpgrade(path).tier >= BTD6Rogue.rogueGame.towerManager.towers[tower.towerModel.baseId].limitTiers[path]) {
+        string gamemode = InGame.instance.GetGameModel().gameMode;
+        if (!gamemode.Contains("BTD6Rogue-")) { return; }
+
+        if (tower.GetUpgrade(path).tier >= BTD6Rogue.rogueGame.towerManager.towers[tower.towerModel.baseId].limitTiers[path])
+        {
             __result = true;
-        } else {
+        }
+        else
+        {
             __result = false;
         }
     }

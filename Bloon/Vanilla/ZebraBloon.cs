@@ -13,4 +13,5 @@ public class ZebraBloon : RogueBloon {
     public override bool Regrow => true;
     public override int RegrowStartRound => 39;
     public override int RegrowEndRound => -1;
+    public override bool Shielded => true;
 }

@@ -1,6 +1,10 @@
 ﻿using BTD_Mod_Helper.Api;
+using BTD_Mod_Helper.Api.Enums;
+using Il2CppAssets.Scripts.Unity;
+using Il2CppNinjaKiwi.Common.ResourceUtils;
 using System;
 using System.Collections.Generic;
+using static Il2CppSystem.Globalization.HebrewNumber;
 
 namespace BTD6Rogue;
 
@@ -35,11 +39,13 @@ public static class HeroUtil {
 		return heroChoices.ToArray();
 	}
 
-	public static HeroChoice CreateHeroChoiceData(RogueHero hero) {
-		return new HeroChoice(hero.BaseHeroId, 1, hero, hero.GetBaseHero().portrait, hero.GetBaseHero());
-	}
+    public static HeroChoice CreateHeroChoiceData(RogueHero hero)
+    {
+        var baseHero = hero.GetBaseHero();
+        return new HeroChoice(hero.BaseHeroId, 1, hero, baseHero.portrait, baseHero);
+    }
 
-	public static HeroData CreateDataFromChoice(HeroChoice choiceData) {
+    public static HeroData CreateDataFromChoice(HeroChoice choiceData) {
 		HeroData heroData = new HeroData(choiceData.towerId, choiceData.towerAmount);
 		return heroData;
 	}

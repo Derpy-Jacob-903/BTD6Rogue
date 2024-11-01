@@ -33,6 +33,11 @@
     <Import Project="..\btd6.targets" />
 
     <ItemGroup>
+      <Compile Remove="Bloon\Vanilla\AquaBloon.cs" />
+      <Compile Remove="Bloon\Vanilla\CastleBrickBloon.cs" />
+      <Compile Remove="Bloon\Vanilla\CastleMagicBloon.cs" />
+      <Compile Remove="Bloon\Vanilla\CastleStoneBloon.cs" />
+      <Compile Remove="Bloon\Vanilla\CastleTechnoBloon.cs" />
       <Compile Remove="Gamemode\Gamemodes\BlitzMode.cs" />
       <Compile Remove="Interface\Panels\ArtifactChoicePanel.cs" />
       <Compile Remove="Interface\Panels\InitialHeroChoicePanel.cs" />
@@ -51,6 +56,10 @@
       <Compile Remove="Round\RoundConfig.cs" />
       <Compile Remove="Round\RoundGenerator.cs" />
       <Compile Remove="Tower\TowerConfig.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="Bloon\Vanilla\AquaBloon.cs" />
     </ItemGroup>
 
     <ItemGroup>

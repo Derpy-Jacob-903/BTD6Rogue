@@ -16,4 +16,8 @@ public class CeramicBloon : RogueBloon {
     public override bool Fortified => true;
     public override int FortifiedStartRound => 56;
     public override int FortifiedEndRound => -1;
+    public override bool Tattered => true;
+    public override int TatteredStartRound => StartRound + 20;
+    public override bool Shielded => true;
+    public override int ShieldedStartRound => StartRound + 20;
 }

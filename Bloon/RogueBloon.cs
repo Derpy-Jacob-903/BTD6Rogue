@@ -1,7 +1,10 @@
 ﻿using BTD_Mod_Helper.Api;
 using Il2CppAssets.Scripts.Data.Knowledge.RelicKnowledge;
+using Il2CppAssets.Scripts.Models;
 using Il2CppAssets.Scripts.Models.Rounds;
+using Il2CppSystem;
 using System;
+using Math = System.Math;
 
 namespace BTD6Rogue;
 
@@ -35,20 +38,66 @@ public abstract class RogueBloon : NamedModContent {
 	public virtual int FortifiedStartRound => 0;
 	public virtual int FortifiedEndRound => 0;
 
-	public virtual BloonGroupModel GenerateBloonGroup(int round, float expectedRbe, float start, float end, bool camo, bool regrow, bool fortified) {
+    public virtual bool Tattered => false;
+    public virtual int TatteredStartRound => StartRound + 7;
+    public virtual int TatteredEndRound => EndRound;
+
+    public virtual bool Shielded => false;
+    public virtual int ShieldedStartRound => StartRound + 7;
+    public virtual int ShieldedEndRound => EndRound;
+
+    [global::System.Serializable]
+    public class InvalidBloonException : System.Exception
+    {
+        public InvalidBloonException() { }
+        public InvalidBloonException(string message) : base(message) { }
+        public InvalidBloonException(string message, System.Exception inner) : base(message, inner) { }
+        protected InvalidBloonException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }
+
+    public virtual BloonGroupModel GenerateBloonGroup(int round, float expectedRbe, float start, float end, bool camo, bool regrow, bool fortified) {
 		int bloonAmount = GetBloonAmount(round, expectedRbe, fortified);
 
 		string newBloonId = BaseBloonId;
 
-		if (regrow) { newBloonId += "Regrow"; }
+        if (regrow) { newBloonId += "Regrow"; }
 		if (fortified) { newBloonId += "Fortified"; }
 		if (camo) { newBloonId += "Camo"; }
 		
 		BloonGroupModel bgm = new BloonGroupModel(BaseBloonId, newBloonId, start, end, bloonAmount);
 		return bgm;
 	}
+    public virtual BloonGroupModel GenerateBloonGroup(int round, float expectedRbe, float start, float end, bool camo, bool regrow, bool fortified, bool tattered, bool shielded)
+    {
+		var Rand = new System.Random();
+        int bloonAmount = GetBloonAmount(round, expectedRbe, fortified);
 
-	public virtual int GetBloonRbe(int round, bool fortified) {
+        string newBloonId = BaseBloonId;
+
+        if (tattered && shielded) // Tattered and Shielded are mutually-exclusive, Randomlly uses one or the other.
+        {
+			var i = Rand.Next(0, 1);
+			if (i == 1) { tattered = false; }
+            else { shielded = false; }
+        }
+        if ((tattered || shielded) && !newBloonId.Contains("ClassicRounds-")) { newBloonId = "ClassicRounds-" + newBloonId; } // Add 'ClassicRounds-' suffix if tattered or shielded, if that suffix is not there.
+        if (tattered && !fortified && !shielded) { newBloonId += "Tattered";} // Tattered and Fortified are mutually-exclusive, Fortified/Shielded overrides Tattered
+        if (shielded && !tattered) { newBloonId += "Shielded"; } // Ditto^^
+        if (regrow) { newBloonId += "Regrow"; } // Shielded and Regrow are mutually-exclusive, Shielded overrides Regrow
+        if (fortified && !(tattered || shielded)) { newBloonId += "Fortified"; }
+        if (camo) { newBloonId += "Camo"; }
+		if (newBloonId.Contains("Tattered") && newBloonId.Contains("Shielded") || newBloonId.Contains("Tattered") && newBloonId.Contains("Fortified") || newBloonId.Contains("Shielded") && newBloonId.Contains("Regrow"))
+		{
+			throw new InvalidBloonException(newBloonId + "is not a valid Bloon!\nIt may be a Tattered-Shielded, a Tattered-Fortified, or a Shielded-Regrow Bloon");
+		}
+
+        BloonGroupModel bgm = new BloonGroupModel(BaseBloonId, newBloonId, start, end, bloonAmount);
+        return bgm;
+    }
+
+    public virtual int GetBloonRbe(int round, bool fortified) {
 		int fortifiedMultiplier = fortified ? 2 : 1;
 		float hpMuliplier = MoabClass ? GetHpMultiplier(round) : 1;
 		return (int) Math.Ceiling(BloonRbe * fortifiedMultiplier * hpMuliplier);

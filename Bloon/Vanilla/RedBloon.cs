@@ -14,4 +14,6 @@ public class RedBloon : RogueBloon {
 	public override bool Regrow => true;
 	public override int RegrowStartRound => 8;
 	public override int RegrowEndRound => 14;
+
+    public override bool Tattered => true;
 }

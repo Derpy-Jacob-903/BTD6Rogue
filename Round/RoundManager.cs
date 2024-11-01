@@ -42,15 +42,19 @@ public class RoundManager(InGame game) {
 			if (sendableBloons.Count < 1) { continue; }
 			Tuple<RogueBloon, List<string>> bloonData = sendableBloons[new Random().Next(sendableBloons.Count)];
 
-			bool isCamo = false;
+            bool isTattered = false;
+            bool isShielded = false;
+            bool isCamo = false;
 			bool isRegrow = false;
 			bool isFortified = false;
-			if (bloonData.Item2.Contains("Camo")) { isCamo = new Random().Next(4) == 0; }
+            if (bloonData.Item2.Contains("Tattered")) { isTattered = new Random().Next(4) == 0; }
+            if (bloonData.Item2.Contains("Shielded")) { isShielded = new Random().Next(4) == 0; }
+            if (bloonData.Item2.Contains("Camo")) { isCamo = new Random().Next(4) == 0; }
 			if (bloonData.Item2.Contains("Regrow")) { isRegrow = new Random().Next(4) == 0; }
 			if (bloonData.Item2.Contains("Fortified")) { isFortified = new Random().Next(4) == 0; }
 
 			int nextIncrease = 0 + new Random().Next(600) + 200;
-			BloonGroupModel bgm = bloonData.Item1.GenerateBloonGroup(round, groupRbe, 0, nextIncrease, isCamo, isRegrow, isFortified);
+			BloonGroupModel bgm = bloonData.Item1.GenerateBloonGroup(round, groupRbe, 0, nextIncrease, isCamo, isRegrow, isFortified, isTattered, isShielded);
 			game.bridge.SpawnBloons(bgm.GetEmissions(), round, 5000);
 			previousSpawn = nextIncrease * 3; // Change previous spawn timer based off the bloon group spawned just now
 		}
@@ -143,7 +147,8 @@ public class RoundManager(InGame game) {
 			bool isFortified = false;
 
 			if (bloonData.Item2.Contains("Camo")) { isCamo = new Random().Next(4) == 0; }
-			if (bloonData.Item2.Contains("Regrow")) { isRegrow = new Random().Next(4) == 0; }
+				if (bloonData.Item1.BaseBloonId.Contains("Olive")) { isCamo = true; } // Olives are always Camo!
+            if (bloonData.Item2.Contains("Regrow")) { isRegrow = new Random().Next(4) == 0; }
 			if (bloonData.Item2.Contains("Fortified")) { isFortified = new Random().Next(4) == 0; }
 
 			bloonGroupModels.Add(bloonData.Item1.GenerateBloonGroup(round, groupRbe, mincrease, nextIncrease, isCamo, isRegrow, isFortified));
