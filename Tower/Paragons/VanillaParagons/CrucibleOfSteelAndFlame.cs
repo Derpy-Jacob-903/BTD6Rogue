@@ -2,7 +2,7 @@
 
 namespace BTD6Rogue;
 
-public class CrucibleOfSteelAndFlame : RogueParagon {
-	public override string DisplayName => "Crucible Of Steel And Flame";
-	public override string BaseTowerId => TowerType.TackShooter;
+public class ApexPlasmaMaster : RogueParagon {
+	public override string DisplayName => "Apex Plasma Master";
+	public override string BaseTowerId => TowerType.DartMonkey;
 }
