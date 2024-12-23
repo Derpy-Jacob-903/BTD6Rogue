@@ -39,14 +39,12 @@ internal static class Spawner_Emit {
 					"CashlessBloon", 0, 0, "");
 				__result.AddMutator(bme, -1, false);
 			}
+   			if (bloonModel.isBoss)
+        		{ 	//Todo: maybe don't do the BTD6Rogue-Boss UI in non BTD6Rogue GameModes?
+            			__instance.bossBloonManager.currentBoss = __result;
+            			__instance.bossBloonManager.currentBossTier = Math.Min(((roundNumber + 1) / 20), 5);
+			}
 		}
-
-		if (bloonModel.isBoss)
-        { //Todo: maybe don't do the BTD6Rogue-Boss UI in non BTD6Rogue GameModes?
-            __instance.bossBloonManager.currentBoss = __result;
-            __instance.bossBloonManager.currentBossTier = Math.Min(((roundNumber + 1) / 20), 5);
-		}
-
 	}
 }
 
