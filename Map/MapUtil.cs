@@ -32,7 +32,7 @@ public static class MapUtil {
 			ModContent.GetContent<EndOfTheRoad>()[0],
 			ModContent.GetContent<Logs>()[0],
 
-			ModContent.GetContent<LuminousCove>()[0],
+            ModContent.GetContent<LuminousCove>()[0],
 			ModContent.GetContent<SulfurSprings>()[0],
 			ModContent.GetContent<WaterPark>()[0],
 			ModContent.GetContent<Polyphemus>()[0],
@@ -56,7 +56,9 @@ public static class MapUtil {
 			ModContent.GetContent<Rake>()[0],
 			ModContent.GetContent<SpiceIslands>()[0],
 
-			ModContent.GetContent<AncientPortal>()[0],
+            ModContent.GetContent<EnchantedGlade>()[0],
+            ModContent.GetContent<LastResort>()[0],
+            ModContent.GetContent<AncientPortal>()[0],
 			ModContent.GetContent<CastleRevenge>()[0],
 			ModContent.GetContent<DarkPath>()[0],
 			ModContent.GetContent<Erosion>()[0],

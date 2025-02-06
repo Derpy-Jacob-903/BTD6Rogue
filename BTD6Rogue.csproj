@@ -8,6 +8,7 @@
         <LangVersion>latest</LangVersion>
         <Optimize>False</Optimize>
         <DebugType>embedded</DebugType>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <ItemGroup>
       <Compile Remove=".github\**" />
@@ -30,7 +31,8 @@
       <None Remove="Portal\**" />
     </ItemGroup>
 
-    <Import Project="..\btd6.targets" />
+	<!-- This Imports Il2CppInterop.Common + The stuff in btd6.targets -->
+    <Import Project="BTD6Rogue.targets" /> 
 
     <ItemGroup>
       <Compile Remove="Gamemode\Gamemodes\BlitzMode.cs" />

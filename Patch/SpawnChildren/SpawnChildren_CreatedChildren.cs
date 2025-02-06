@@ -13,7 +13,7 @@ internal static class SpawnChildren_CreatedChildren {
 		if (__instance.bloon.emissionIndex >= 5000) {
 			foreach (Bloon bloon in childernCreatedIn) {
 				IncreaseBloonWorthModel.BloonWorthMutator bme = new IncreaseBloonWorthModel.BloonWorthMutator(
-					"CashlessBloon", 0, 0, "");
+					"CashlessBloon", 0, 0, "", Il2Cpp.BloonProperties.None);
 				bloon.AddMutator(bme, -1, false);
 			}
 		}

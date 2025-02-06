@@ -34,7 +34,7 @@ internal static class Spawner_Emit {
 			if (emissionIndex >= 5000)
 			{
 				IncreaseBloonWorthModel.BloonWorthMutator bme = new IncreaseBloonWorthModel.BloonWorthMutator(
-					"CashlessBloon", 0, 0, "");
+					"CashlessBloon", 0, 0, "", Il2Cpp.BloonProperties.None);
 				__result.AddMutator(bme, -1, false);
 			}
 		}
