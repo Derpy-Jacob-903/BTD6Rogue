@@ -1,8 +1,8 @@
 namespace BTD6Rogue;
 
 public static class ModHelperData {
-    public const string WorksOnVersion = "46";
-    public const string Version = "3.1.1";
+    public const string WorksOnVersion = "47.0";
+    public const string Version = "3.1.2";
     public const string Name = "BTD6Rogue";
     public const string Description =
         "Turn BTD6 into a Roguelike!" +
