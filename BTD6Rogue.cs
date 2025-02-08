@@ -7,6 +7,7 @@ using MelonLoader.NativeUtils;
 using System.Runtime.InteropServices;
 using Il2CppInterop.Common;
 using HarmonyLib;
+using Il2CppAssets.Scripts.Models;
 
 
 [assembly: MelonInfo(typeof(BTD6Rogue.BTD6Rogue), ModHelperData.Name, ModHelperData.Version, ModHelperData.RepoOwner)]
@@ -23,9 +24,9 @@ public class BTD6Rogue : BloonsTD6Mod {
 	public static FileManager fileManager = new FileManager();
 	public static PlayerStats playerStats = fileManager.LoadPlayerStats();
 
-	// Static instance of the current game
-	// Should only be assigned when starting/loading a game
-	// Unassigned when ending/exiting a game
+    // Static instance of the current game
+    // Should only be assigned when starting/loading a game
+    // Unassigned when ending/exiting a game
 	public static RogueGame rogueGame = null!;
 
 	public override void OnApplicationStart() {

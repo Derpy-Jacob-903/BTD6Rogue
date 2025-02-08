@@ -1,13 +1,16 @@
 ﻿using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Data.Quests;
+using Il2CppAssets.Scripts.Models;
 using Il2CppAssets.Scripts.Models.Difficulty;
 using Il2CppAssets.Scripts.Models.Gameplay.Mods;
 using Il2CppAssets.Scripts.Models.Profile;
 using Il2CppAssets.Scripts.Models.SimulationBehaviors;
 using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppAssets.Scripts.Simulation.SimulationBehaviors;
+using Il2CppAssets.Scripts.Simulation.Towers;
 using Il2CppAssets.Scripts.Simulation.Track;
+using Il2CppAssets.Scripts.Unity.Map;
 using Il2CppAssets.Scripts.Unity.Player;
 using Il2CppAssets.Scripts.Unity.UI_New;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
@@ -170,9 +173,23 @@ public class RogueGame {
 		game.bridge.SetRound(0);
 
 		rerolls = 3;
-		roundManager.GenerateRound(0, true);
+		roundManager.GenerateRound(4, true);
 		roundManager.GenerateBossBag();
 
 		gamemode.OnMatchStart();
 	}
+}
+
+public class DummyRogueGame
+{
+	public RoundManager roundManager = null!;
+	public void GameLoaded(InGame game)
+	{
+        roundManager = new RoundManager(game);
+    }
+    public void GameStarted(InGame game)
+    {
+        roundManager = new RoundManager(game);
+        roundManager.GenerateRound(4, true);
+    }
 }

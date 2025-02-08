@@ -102,19 +102,20 @@ public class RoundManager(InGame game) {
 		RoundModel roundModel = baseRoundModel;
 		roundModel.ClearBloonGroups();
 
-		RogueDifficulty difficulty = BTD6Rogue.rogueGame.difficulty;
+		RogueDifficulty difficulty = new MediumDifficulty();
 
 		int bloonGroups = new Random().Next(4) + 2;
 		int mincrease = 0;
 
-		if ((round + 1) % 20 == 0) {
-			int bossTier = Math.Min((round + 1) / 20, 5);
-			roundModel.AddBloonGroup(nextBoss + bossTier.ToString());
-		}
+		//if ((round + 1) % 20 == 0) {
+			//int bossTier = Math.Min((round + 1) / 20, 5);
+			//roundModel.AddBloonGroup(nextBoss + bossTier.ToString());
+		//}
 
 		List<BloonGroupModel> bloonGroupModels = roundModel.groups.ToList();
 
-		int roundRbe = GetRoundRbe(round);
+
+        int roundRbe = GetRoundRbe(round);
 		int remainingRbe = roundRbe;
 		int remainingGroups = bloonGroups;
 		int averageGroupRbe = roundRbe / bloonGroups;
@@ -160,6 +161,7 @@ public class RoundManager(InGame game) {
 	}
 
 	public int GetRoundRbe(int round) {
-		return (int) Math.Floor((0.16 * Math.Pow(round, 3) - 0.75 * Math.Pow(round, 2) + 15 * round) / 3 + 20);
+		var v = (round) * 4;
+        return (int) Math.Floor((0.16 * Math.Pow(v, 3) - 0.75 * Math.Pow(v, 2) + 15 * v) / 3 + 20);
 	}
 }

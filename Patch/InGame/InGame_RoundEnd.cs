@@ -14,19 +14,23 @@ namespace BTD6Rogue;
 [HarmonyPatch(typeof(InGame), nameof(InGame.RoundEnd))]
 internal static class InGame_RoundEnd {
 
+	
+
 	[HarmonyPostfix]
 	private static void Postfix(InGame __instance) {
 		if (__instance == null || __instance.bridge == null) { return; }
-        if (BTD6Rogue.rogueGame == null) { return; }
+        //if (BTD6Rogue.rogueGame == null) { return; }
 
         InGame game = __instance;
 
         // Generate a random round for the next round when the current round ends
 		int round = game.bridge.GetCurrentRound();
 
-        BTD6Rogue.rogueGame.roundManager.GenerateRound(round + 1, true);
+		RoundManager roundManager = new RoundManager(__instance);
+        roundManager.GenerateRound(round + 1, true);
 
-		if (new int[] { 9, 29, 49, 69, 89, 109, 129, 149, 169, 189, 209, 229, 249, 269, 289, 309 }.Contains(round)) {
+		/*
+		    if (new int[] { 9, 29, 49, 69, 89, 109, 129, 149, 169, 189, 209, 229, 249, 269, 289, 309 }.Contains(round)) {
 			string nextBoss = BTD6Rogue.rogueGame.roundManager.GenerateNextBoss();
 			__instance.bridge.simulation.model.bossBloonType = nextBoss;
 
@@ -60,6 +64,7 @@ internal static class InGame_RoundEnd {
 			if (BTD6Rogue.rogueGame.rerolls < 3) { BTD6Rogue.rogueGame.rerolls++; }
 			BTD6Rogue.rogueGame.encounterManager.AddEncounter(ModContent.GetContent<GainParagonEncounter>()[0]);
 		}
+		*/
 	}
 }
 

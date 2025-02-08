@@ -21,29 +21,29 @@ internal static class Spawner_Emit {
 	private static void Postfix(Spawner __instance, BloonModel bloonModel, int roundNumber, int emissionIndex, ref Bloon __result) {
 		if (BTD6Rogue.rogueGame is not null)
 		{
-			if (bloonModel.isBoss || bloonModel.baseId.Contains("Lych") || bloonModel.IsRock)
-			{
-				RogueBoss boss = BossUtil.GetBossFromBloonId(bloonModel.baseId);
-				boss.AdjustBloon(__result, roundNumber / 20, false);
-				if (boss.IsBoss)
-				{
-					BTD6Rogue.rogueGame.roundManager.BossSpawned();
-				}
-			}
+			//if (bloonModel.isBoss || bloonModel.baseId.Contains("Lych") || bloonModel.IsRock)
+			//{
+				//RogueBoss boss = BossUtil.GetBossFromBloonId(bloonModel.baseId);
+				//boss.AdjustBloon(__result, roundNumber / 20, false);
+				//if (boss.IsBoss)
+				//{
+					//BTD6Rogue.rogueGame.roundManager.BossSpawned();
+				//}
+			//}
 
-			if (emissionIndex >= 5000)
-			{
-				IncreaseBloonWorthModel.BloonWorthMutator bme = new IncreaseBloonWorthModel.BloonWorthMutator(
-					"CashlessBloon", 0, 0, "", Il2Cpp.BloonProperties.None);
-				__result.AddMutator(bme, -1, false);
-			}
+			//if (emissionIndex >= 5000)
+			//{
+				//IncreaseBloonWorthModel.BloonWorthMutator bme = new IncreaseBloonWorthModel.BloonWorthMutator(
+					//"CashlessBloon", 0, 0, "", Il2Cpp.BloonProperties.None);
+				//__result.AddMutator(bme, -1, false);
+			//}
 		}
 
-		if (bloonModel.isBoss)
-        { //Todo: maybe don't do the BTD6Rogue-Boss UI in non BTD6Rogue GameModes?
-            __instance.bossBloonManager.currentBoss = __result;
-            __instance.bossBloonManager.currentBossTier = Math.Min(((roundNumber + 1) / 20), 5);
-		}
+		//if (bloonModel.isBoss)
+        //{ //Todo: maybe don't do the BTD6Rogue-Boss UI in non BTD6Rogue GameModes?
+            //__instance.bossBloonManager.currentBoss = __result;
+            //__instance.bossBloonManager.currentBossTier = Math.Min(((roundNumber + 1) / 20), 5);
+		//}
 
 	}
 }

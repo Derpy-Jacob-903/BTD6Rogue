@@ -9,7 +9,10 @@ public static class GamemodeUtil {
 	// Checks if any given gamemode id is also a gamemode which inherents RogueGamemode
 	public static bool IsRogueGamemode(string id) {
 		List<RogueGamemode> rogueGamemodes = ModContent.GetContent<RogueGamemode>();
-		foreach (RogueGamemode mode in rogueGamemodes) { if (mode.Id == id) { return true; } }
+		foreach (RogueGamemode mode in rogueGamemodes)
+		{
+			if (mode.Id == id) { return true; }
+		}
 		return false;
 	}
 
