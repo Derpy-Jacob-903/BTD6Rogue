@@ -7,8 +7,10 @@ namespace BTD6Rogue;
 internal static class BossBloonManager_SpawnBoss {
 
 	[HarmonyPostfix]
-	private static bool Prefix(BossBloonManager __instance) {
-		return false;
+	private static bool Prefix(BossBloonManager __instance)
+    {
+        if (BTD6Rogue.rogueGame == null) { return true; }
+        return false;
 	}
 }
 

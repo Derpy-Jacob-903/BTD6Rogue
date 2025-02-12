@@ -7,8 +7,10 @@ namespace BTD6Rogue;
 internal static class BossBloonManager_OnRoundStart {
 
 	[HarmonyPostfix]
-	private static bool Prefix(BossBloonManager __instance, int spawnedRound) {
-		if (__instance.GetNextBossSpawnRound().Value != spawnedRound) { return true; }
+	private static bool Prefix(BossBloonManager __instance, int spawnedRound)
+    {
+        if (BTD6Rogue.rogueGame == null) { return true; }
+        if (__instance.GetNextBossSpawnRound().Value != spawnedRound) { return true; }
 		return false;
 	}
 }
