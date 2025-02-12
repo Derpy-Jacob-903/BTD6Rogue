@@ -23,7 +23,7 @@ namespace BTD6Rogue;
 internal static class MainMenu_Open {
 	[HarmonyPostfix]
 	private static void Postfix(MainMenu __instance) {
-		GameObject rogueButton = __instance.transform.Cast<RectTransform>().FindChild("BottomButtonGroup").FindChild("Monkeys").gameObject.Duplicate(__instance.transform.GetParent());
+		/*GameObject rogueButton = __instance.transform.Cast<RectTransform>().FindChild("BottomButtonGroup").FindChild("Monkeys").gameObject.Duplicate(__instance.transform.GetParent());
 		rogueButton.name = "Rogue";
 		rogueButton.transform.position = new Vector3(0, 0, 0);
 		rogueButton.transform.localPosition = new Vector3(-100, -600, 0);

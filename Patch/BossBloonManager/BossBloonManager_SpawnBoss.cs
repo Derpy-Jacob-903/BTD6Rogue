@@ -8,7 +8,8 @@ internal static class BossBloonManager_SpawnBoss {
 
 	[HarmonyPostfix]
 	private static bool Prefix(BossBloonManager __instance) {
-		return false;
+        if (BTD6Rogue.rogueGame == null) { return true; }
+        return false;
 	}
 }
 

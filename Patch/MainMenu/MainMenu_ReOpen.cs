@@ -16,7 +16,7 @@ namespace BTD6Rogue;
 internal static class MainMenu_ReOpen {
 	[HarmonyPostfix]
 	private static void Postfix(MainMenu __instance) {
-		GameObject rogueButton = __instance.transform.Cast<RectTransform>().FindChild("BottomButtonGroup").FindChild("Monkeys").gameObject.Duplicate(__instance.transform.GetParent());
+		/*GameObject rogueButton = __instance.transform.Cast<RectTransform>().FindChild("BottomButtonGroup").FindChild("Monkeys").gameObject.Duplicate(__instance.transform.GetParent());
 		rogueButton.name = "Rogue";
 		rogueButton.transform.position = new Vector3(0, 0, 0);
 		rogueButton.transform.localPosition = new Vector3(-100, -600, 0);
@@ -25,6 +25,6 @@ internal static class MainMenu_ReOpen {
 		SpriteReference sprite = ModContent.GetSpriteReference<BTD6Rogue>("PlayRogueImage");
 		rogueButton.GetComponentInChildrenByName<Image>("Button").SetSprite(sprite.ToString());
 		rogueButton.GetComponentInChildren<NK_TextMeshProUGUI>().localizeKey = $"Rogue";
-		rogueButton.GetComponentInChildren<Button>().SetOnClick(() => ModGameMenu.Open<RogueGameMenu>());
+		rogueButton.GetComponentInChildren<Button>().SetOnClick(() => ModGameMenu.Open<RogueGameMenu>());*/
 	}
 }
