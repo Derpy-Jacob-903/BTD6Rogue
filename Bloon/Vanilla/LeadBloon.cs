@@ -35,39 +35,6 @@ public class XStablesModMetal : RogueBloon
     public override int FortifiedStartRound => 71;
     public override int FortifiedEndRound => -1;
 }
-public class XStablesModFrost : RogueBloon
-{
-    public override string BaseBloonId => "XStablesMod-Frost";
-    public override int StartRound => 48;
-    public override int EndRound => -1;
-
-    public override int BloonRbe => 51;
-
-    public override bool Camo => true;
-    public override int CamoStartRound => 77;
-    public override int CamoEndRound => -1;
-    public override bool Regrow => true;
-    public override int RegrowStartRound => 66;
-    public override int RegrowEndRound => -1;
-    public override bool Fortified => true;
-    public override int FortifiedStartRound => 71;
-    public override int FortifiedEndRound => -1;
-}
-public class Glade : RogueBloon
-{
-    public override string BaseBloonId => "XStablesMod-Glade";
-    public override int StartRound => 48;
-    public override int EndRound => -1;
-
-    public override int BloonRbe => 51;
-
-    public override bool Camo => true;
-    public override int CamoStartRound => 77;
-    public override int CamoEndRound => -1;
-    public override bool Regrow => true;
-    public override int RegrowStartRound => 66;
-    public override int RegrowEndRound => -1;
-}
 public class Robo : RogueBloon
 {
     public override string BaseBloonId => "XStablesMod-Robo";

@@ -12,9 +12,17 @@ public class MoabBloon : RogueBloon {
     public override int FortifiedStartRound => 60;
     public override int FortifiedEndRound => -1;
 }
+public class CMoabBloon : RogueBloon {
+    public override string BaseBloonId => "ClassicRounds-ClassicMoab";
+    public override int StartRound => 37;
+    public override int EndRound => -1;
+
+	public override int BloonRbe => 522;
+	public override bool MoabClass => true;
+}
 public class XMoabBloon : RogueBloon {
     public override string BaseBloonId => "XStablesMod-MoabX";
-    public override int StartRound => 50;
+    public override int StartRound => 45;
     public override int EndRound => -1;
 
 	public override int BloonRbe => 1252;
@@ -30,8 +38,8 @@ public class MiniMoabBloon : RogueBloon {
 }
 public class BrickCasle : RogueBloon
 {
-    public override string BaseBloonId => "Moab";
-    public override int StartRound => 50;
+    public override string BaseBloonId => "XStablesMod-BrickCastle";
+    public override int StartRound => 45;
     public override int EndRound => -1;
 
     public override int BloonRbe => 1440;
@@ -52,7 +60,7 @@ public class HTA : RogueBloon
     public override int StartRound => 57;
     public override int EndRound => -1;
 
-    public override int BloonRbe => 4428;
+    public override int BloonRbe => 628;
     public override bool MoabClass => true;
 }
 public class LPZ : RogueBloon

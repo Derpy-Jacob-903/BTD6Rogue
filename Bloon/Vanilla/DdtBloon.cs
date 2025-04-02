@@ -20,7 +20,7 @@ public class DddtBloon : RogueBloon {
 	public override int BloonRbe => 14386;
 	public override bool MoabClass => true;
 
-	public override bool Fortified => true;
+	public override bool Fortified => false;
     public override int FortifiedStartRound => 140;
     public override int FortifiedEndRound => -1;
 }

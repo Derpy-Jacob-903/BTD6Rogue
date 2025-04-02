@@ -1,14 +1,20 @@
-﻿using BTD_Mod_Helper.Api;
+﻿using BTD_Mod_Helper;
+using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Models.Rounds;
 using Il2CppAssets.Scripts.Models.TowerSets;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
+using Il2CppAssets.Scripts.Unity.UI_New.InGame.Races;
+using Il2CppNinjaKiwi.LiNK.Client.DotNetZip.Zlib;
 using NAudio.Codecs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using UnityEngine;
 using static Il2CppSystem.Runtime.Remoting.RemotingServices;
+using static MelonLoader.MelonLogger;
+using Random = System.Random;
 
 namespace BTD6Rogue;
 
@@ -166,13 +172,28 @@ public class RoundManager(InGame game) {
 	}
 
 	public int GetRoundRbe(int round) {
-		//bool procAcrobat = round == game.lastSetRound;
+        //bool procAcrobat = round == game.lastSetRound;
 		var mult = FunnyNumber(round);
-        var v = (round + mult[0]) * (5 + mult[1]/2);
-		//if (procAcrobat) { v *= 3; }
+
+        var v = (round + mult[0]/4) * (4 + mult[1]/4);
+        ModHelper.Msg<BTD6Rogue>("[BTD6Rogue-v" + ModHelperData.Version + "] (Info) " + "Jimbo" + ": " + 
+            (round + mult[0]) + " Chips x " + (4 + mult[1] / 4) + " Mult");
+        //if (procAcrobat) { v *= 3; }
         //if (round + game.GetStartRound() % 6 == 0) { v *= 4; }
+        ModHelper.Msg<BTD6Rogue>("[BTD6Rogue-v" + ModHelperData.Version + "] (Info) " + "Jimbo" + ": " +
+            Math.Floor((0.16 * Math.Pow(v, 3) - 0.75 * Math.Pow(v, 2) + 15 * v) / 3 + 20) + " Round RBE");
         return (int) Math.Floor((0.16 * Math.Pow(v, 3) - 0.75 * Math.Pow(v, 2) + 15 * v) / 3 + 20);
 	}
+
+    public void JimboJumpscare()
+    {
+        ModContent.GetAudioClip<BTD6Rogue>("negative").Play();
+    }
+    public void log(string s)
+    {
+        ModContent.GetAudioClip<BTD6Rogue>("voice" + new Random().Next(1, 11)).Play();
+        ModHelper.Msg<BTD6Rogue>("[BTD6Rogue-v" + ModHelperData.Version + "] (Info) " + "Jimbo" + ": " + s);
+    }
 
     public int[] FunnyNumber(int round)
 	{
@@ -184,144 +205,213 @@ public class RoundManager(InGame game) {
             var strings = Array.Empty<string>();
             switch (rand.Next(0, 25))
             {
-                case 0: v[1] += 4; break; // Joker
-                case 1: v[1] += rand.Next(0, 23); break; // Misprint Joker
-                case 2:	// Greedy Joker
-                    
+                case 0: log("Joker");  v[1] += 4; break; // Joker
+                case 1:
+                    log("Misprint Joker");
+                    v[1] += rand.Next(0, 23); break; // Misprint Joker
+                case 2: // Greedy Joker
+                    log("Greedy Joker");
                     foreach (var j in game.GetTowers())
                     {
                         if (j.towerModel.towerSet == Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Support)
-						{ v[1] += 3; }
+						{ v[1] += 3; JimboJumpscare();
+                            log("Greedy Joker Proc");
+                        }
                     }
                     break;
                 case 3: // Lusty Joker
+                    log("Lusty Joker");
                     foreach (var j in game.GetTowers())
                     {
                         if (j.towerModel.towerSet == Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Magic)
-                        { v[1] += 3; }
+                        { v[1] += 3; JimboJumpscare();
+                            log("Lusty Joker Proc");
+                        }
                     }
                     break;
                 case 4: // Wrathful Joker
+                    log("Wrathful Joker");
                     foreach (var j in game.GetTowers())
                     {
                         if (j.towerModel.towerSet == Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Primary)
-                        { v[1] += 3; }
+                        { v[1] += 3; JimboJumpscare();
+                            log("Wrathful Joker Proc");
+                        }
                     }
                     break;
                 case 5: // Gluttonous Joker
+                    log("Gluttonous Joker");
                     foreach (var j in game.GetTowers())
                     {
                         if (j.towerModel.towerSet == Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Military)
-                        { v[1] += 3; }
+                        { v[1] += 3; JimboJumpscare();
+                            log("Gluttonous Joker Proc");
+                        }
                     }
                     break;
                 case 6: //Jolly Joker
-                        var rankGroups6 = game.GetTowers().GroupBy(card => card.towerModel.baseId);
-                        if (rankGroups6.Any(group => group.Count() == 2)) { v[1] += 8; }
+                    log("Jolly Joker");
+                    var rankGroups6 = game.GetTowers().GroupBy(card => card.towerModel.baseId);
+                        if (rankGroups6.Any(group => group.Count() >= 2 && group.Count() <= 4)) { v[1] += 8; JimboJumpscare();
+                        log("Jolly Joker Proc");
+                    }
                     break;
                 case 7: //Zany Joker
-                        var rankGroups7 = game.GetTowers().GroupBy(card => card.towerModel.baseId);
-                        if (rankGroups7.Any(group => group.Count() == 3)) { v[1] += 12; }
+                    log("Zany Joker");
+                    var rankGroups7 = game.GetTowers().GroupBy(card => card.towerModel.baseId);
+                        if (rankGroups7.Any(group => group.Count() >= 3 && group.Count() <= 6)) { v[1] += 12; JimboJumpscare();
+                        log("Zany Joker Proc");
+                    }
                     break;
                 case 8: //Mad Joker
-                        var rankGroups8 = game.GetTowers().GroupBy(card => card.towerModel.baseId);
-                        var pairsCount8 = rankGroups8.Count(group => group.Count() == 2);
-                        if (pairsCount8 >= 2) { v[1] += 10; }
+                    log("Mad Joker Proc");
+                    var rankGroups8 = game.GetTowers().GroupBy(card => card.towerModel.baseId);
+                        var pairsCount8 = rankGroups8.Count(group => group.Count() >= 2 && group.Count() <= 4);
+                        if (pairsCount8 >= 2) { v[1] += 10; JimboJumpscare();
+                        log("Mad Joker Proc");
+                    }
                     break;
                 case 9: //Crazy Joker
-                        var rankGroups9 = game.GetTowers().GroupBy(card => card.towerModel.baseId);
-                        if (rankGroups9.Count() >= 5) { v[1] += 12; }
+                    log("Crazy Joker");
+                    var rankGroups9 = game.GetTowers().GroupBy(card => card.towerModel.baseId);
+                        if (rankGroups9.Count() >= 5) { v[1] += 12; JimboJumpscare();
+                        log("Crazy Joker Proc");
+                    }
                     break;
                 case 10: //Droll Joker
-                        var rankGroups10 = game.GetTowers().GroupBy(card => card.towerModel.towerSet);
-                        if (rankGroups10.Any(group => group.Count() >= 5)) { v[1] += 10; }
+                    log("Droll Joker");
+                    var rankGroups10 = game.GetTowers().GroupBy(card => card.towerModel.towerSet);
+                        if (rankGroups10.Any(group => group.Count() >= 5)) { v[1] += 10; JimboJumpscare();
+                        log("Droll Joker Proc");
+                    }
                     break;
                 case 11: //Sly Joker
+                    log("Sly Joker ");
                     var rankGroups11 = game.GetTowers().GroupBy(card => card.towerModel.baseId);
-                    if (rankGroups11.Any(group => group.Count() >= 2)) { v[0] += 8; }
+                    if (rankGroups11.Any(group => group.Count() >= 2 && group.Count() <= 4)) { v[0] += 5; JimboJumpscare();
+                        log("Sly Joker Proc");
+                    }
                     break;
                 case 12: //Wily Joker
+                    log("Wily Joker");
                     var rankGroups12 = game.GetTowers().GroupBy(card => card.towerModel.baseId);
-                    if (rankGroups12.Any(group => group.Count() >= 2)) { v[0] += 2; }
+                    if (rankGroups12.Any(group => group.Count() >= 3 && group.Count() <= 6)) { v[0] += 10; JimboJumpscare();
+                        log("Wily Joker Proc");
+                    }
                     break;
                 case 13: //Clever Joker
+                    log("Clever Joker");
                     var rankGroups13 = game.GetTowers().GroupBy(card => card.towerModel.baseId);
-                    var pairsCount13 = rankGroups13.Count(group => group.Count() == 2);
-                    if (pairsCount13 >= 2) { v[0] += 10; }
+                    var pairsCount13 = rankGroups13.Count(group => group.Count() >= 2 && group.Count() <= 4);
+                    if (pairsCount13 >= 2) { v[0] += 8; JimboJumpscare();
+                        log("Clever Joker Proc");
+                    }
                     break;
                 case 14: //Devious Joker
+                    log("Devious Joker");
                     var rankGroups14 = game.GetTowers().GroupBy(card => card.towerModel.baseId);
-                    if (rankGroups14.Count() >= 5) { v[0] += 12; }
+                    if (rankGroups14.Count() >= 5) { v[0] += 10; JimboJumpscare();
+                        log("Devious Joker Proc");
+                    }
                     break;
                 case 15: //Crafty Joker
+                    log("Crafty Joker");
                     var rankGroups15 = game.GetTowers().GroupBy(card => card.towerModel.towerSet);
-                    if (rankGroups15.Any(group => group.Count() == 5)) { v[0] += 10; }
+                    if (rankGroups15.Any(group => group.Count() >= 5)) { v[0] += 8; JimboJumpscare();
+                        log("Crafty Joker Proc");
+                    }
                     break;
                 case 16: //Half Joker
+                    log("Half Joker");
                     var rankGroups16 = game.GetTowers();
-                    if (rankGroups16.Count <= 3) { v[1] += 20; }
+                    if (rankGroups16.Count <= 6) { v[1] += 20; JimboJumpscare();
+                        log("Half Joker Proc");
+                    }
                     break;
                 case 17: //Odd Todd
+                    log("Odd Todd");
                     foreach (var j in game.GetTowers())
                     {
                         if (j.towerModel.tiers.Sum() % 2 == 1)
-                        { v[0] += 3; }
+                        { v[0] += 3; JimboJumpscare();
+                            log("Odd Todd Proc");
+                        }
                     }
                     break;
                 case 18: //Even Steven
+                    log("Even Steven");
                     foreach (var j in game.GetTowers())
                     {
                         if (j.towerModel.tiers.Sum() % 2 == 0)
-                        { v[1] += 4; }
+                        { v[1] += 4; JimboJumpscare();
+                            log("Even Steven Proc");
+                        }
                     }
                     break;
                 case 19: //Scholar
+                    log("Scholar");
                     foreach (var j in game.GetTowers())
                     {
                         if (j.towerModel.tier == 5)
-                        { v[0] += 2; v[1] += 4; }
+                        { v[0] += 2; v[1] += 4; JimboJumpscare();
+                            log("Scholar Proc");
+                        }
                     }
                     break;
                 case 20: //Gros Michel/Cavendish
                     var i19 = rand.Next(1, 6);
-					if (i19 == 1) { v[1] += 15; }
-					else { v[1] *= 3; }
+					if (i19 != 1) { v[1] += 15;
+                        log("Gros Michel");
+                    }
+					else { v[1] *= 3; JimboJumpscare();
+                        log("Cavendish");
+                    }
                     break;
                 case 21: //Photograph
+                    log("Photograph");
                     foreach (var j in game.GetTowers())
                     {
                         if (j.towerModel.towerSet == Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Hero)
                         { 
-							v[1] *= 2;
+							v[1] *= 2; JimboJumpscare();
+                            log("Photograph Proc");
                             break;
                         }
                     }
                     break;
                 case 22: //Blackboard
+                    log("Blackboard");
                     foreach (var j in game.GetTowers())
                     {
                         if (j.towerModel.towerSet == (TowerSet.Magic | TowerSet.Support))
-                        { 
+                        {
+                            log("Blackboard Skiped");
                             break; 
                         }
                     }
-                    v[1] *= 3;
+                    log("Blackboard Proc");
+                    v[1] *= 3; JimboJumpscare();
                     break;
                 case 23: //Walkie Talkie
+                    log("Walkie Talkie");
                     foreach (var j in game.GetTowers())
                     {
                         if (j.towerModel.tier == 4)
-                        { v[0] += 1; v[1] += 4; }
+                        { v[0] += 1; v[1] += 4; JimboJumpscare();
+                            log("Walkie Talkie Proc");
+                        }
                     }
                     break;
                 case 24: //Green Joker
+                    log("Green Joker");
                     v[1] += game.GetTowers().Count;
                     break;
                 case 25: //Blue Joker
+                    log("Blue Joker");
                     int tv = 0;
                     foreach (var j in game.GetTowers())
                     {
-                        tv += (j.towerModel.tiers.Sum() / 10 - j.towerModel.tiers.Sum() % 10);
+                        tv += (j.towerModel.tiers.Sum() - j.towerModel.tiers.Sum() % 10) / 10;
                     }
                     v[0] += (int)tv;
                     break;

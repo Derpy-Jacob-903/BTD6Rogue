@@ -32,9 +32,9 @@ public class Arcane : RogueBloon
 }
 public class MagicCastle : RogueBloon
 {
-    public override string BaseBloonId => "Purple";
+    public override string BaseBloonId => "XStablesMod-MagicCastle";
     public override int StartRound => 72;
     public override int EndRound => -1;
 
-    public override int BloonRbe => 45;
+    public override int BloonRbe => 520;
 }

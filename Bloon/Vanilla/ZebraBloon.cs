@@ -5,7 +5,7 @@ public class ZebraBloon : RogueBloon {
     public override int StartRound => 31;
     public override int EndRound => -1;
 
-	public override int BloonRbe => 23;
+	public override int BloonRbe => 51;
 
 	public override bool Camo => true;
     public override int CamoStartRound => 45;
