@@ -8,7 +8,7 @@ public class EnchantedGlade : RogueMap {
 	public override string InternalName => "EnchantedGlade";
 	public override string MapName => "Enchanted Glade";
 
-	public override string MapImage => VanillaSprites.MapSelect;
+	public override string MapImage => VanillaSprites.MapSelectEnchantedGladeMapButton;
 
 	public override MapDifficulty GameDifficulty => MapDifficulty.Advanced;
 	public override int RogueDifficulty => 0;
