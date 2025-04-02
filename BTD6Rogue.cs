@@ -133,7 +133,7 @@ public class BTD6Rogue : BloonsTD6Mod {
         //after here is postfix
         var __instance = IL2CPP.PointerToValueGeneric<Bloon>(@this, false, false)!; //this is your bloon
 
-        if (__instance.bloonModel.isBoss)
+        if (__instance.bloonModel.isBoss && BTD6Rogue.rogueGame is not null)
         {
             BTD6Rogue.rogueGame.roundManager.BossDefeated();
         }

@@ -19,8 +19,7 @@ internal static class Spawner_Emit {
 
 	[HarmonyPostfix]
 	private static void Postfix(Spawner __instance, BloonModel bloonModel, int roundNumber, int emissionIndex, ref Bloon __result) {
-		if (BTD6Rogue.rogueGame is not null)
-		{
+        if (BTD6Rogue.rogueGame is null) { return; }
 			if (bloonModel.isBoss || bloonModel.baseId.Contains("Lych") || bloonModel.IsRock)
 			{
 				RogueBoss boss = BossUtil.GetBossFromBloonId(bloonModel.baseId);
@@ -37,13 +36,11 @@ internal static class Spawner_Emit {
 					"CashlessBloon", 0, 0, "", Il2Cpp.BloonProperties.None);
 				__result.AddMutator(bme, -1, false);
 			}
-		}
 
-		if (bloonModel.isBoss)
-        { //Todo: maybe don't do the BTD6Rogue-Boss UI in non BTD6Rogue GameModes?
-            __instance.bossBloonManager.currentBoss = __result;
-            __instance.bossBloonManager.currentBossTier = Math.Min(((roundNumber + 1) / 20), 5);
-		}
-
+			if (bloonModel.isBoss)
+			{ //Todo: maybe don't do the BTD6Rogue-Boss UI in non BTD6Rogue GameModes?
+				__instance.bossBloonManager.currentBoss = __result; //this e
+				__instance.bossBloonManager.currentBossTier = Math.Min(((roundNumber + 1) / 20), 5);
+			}
 	}
 }
