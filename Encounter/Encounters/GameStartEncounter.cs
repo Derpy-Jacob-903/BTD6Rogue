@@ -8,10 +8,19 @@ public class GameStartEncounter : RogueEncounter {
 	}
 
 	public override void StartEncounter() {
-		if (!BTD6Rogue.rogueGame.towerManager.disabledTowerSets.Contains(Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Hero)) { BTD6Rogue.rogueGame.panelManager.AppendPanel("HeroSelectPanel", this); }
-		BTD6Rogue.rogueGame.panelManager.AppendPanel("TowerSelectPanel", this);
-		BTD6Rogue.rogueGame.panelManager.AppendPanel("TowerSelectPanel", this);
-		BTD6Rogue.rogueGame.panelManager.AppendPanel("TowerSelectPanel", this, true);
+		if (ModifierUtil.HasModifier<ODraftModifier>()) {
+            if (!BTD6Rogue.rogueGame.towerManager.disabledTowerSets.Contains(Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Hero)) { BTD6Rogue.rogueGame.panelManager.AppendPanel("HeroChoicePanel", this); }
+            BTD6Rogue.rogueGame.panelManager.AppendPanel("TowerChoicePanel", this);
+			BTD6Rogue.rogueGame.panelManager.AppendPanel("TowerChoicePanel", this);
+            BTD6Rogue.rogueGame.panelManager.AppendPanel("TowerChoicePanel", this, true);
+			return;
+        }
+		else {
+            if (!BTD6Rogue.rogueGame.towerManager.disabledTowerSets.Contains(Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Hero)) { BTD6Rogue.rogueGame.panelManager.AppendPanel("HeroSelectPanel", this); }
+            BTD6Rogue.rogueGame.panelManager.AppendPanel("TowerSelectPanel", this);
+            if (!ModifierUtil.HasModifier<OScatterbrainModifier>()) { BTD6Rogue.rogueGame.panelManager.AppendPanel("TowerSelectPanel", this); }
+            BTD6Rogue.rogueGame.panelManager.AppendPanel("TowerSelectPanel", this, true);
+        }
 	}
 
 	public override void EncounterPanelCreated() {}

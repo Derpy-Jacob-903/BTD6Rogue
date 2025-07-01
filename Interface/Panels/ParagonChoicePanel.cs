@@ -41,6 +41,7 @@ public class ParagonChoicePanel : RoguePanel {
 
 		ParagonChoice[] paragonChoices = ParagonUtil.CreateValidParagonChoices(BTD6Rogue.rogueGame);
 		if (paragonChoices == null) { BTD6Rogue.rogueGame.towerManager.UnlockAllParagons(); paragonChoices = ParagonUtil.CreateValidParagonChoices(BTD6Rogue.rogueGame); }
+		if (ModifierUtil.HasModifier<OBinaryModifier>()) { var binaryChoices = paragonChoices.ToList(); binaryChoices.Remove(binaryChoices.Last()); paragonChoices = binaryChoices.ToArray(); }
 
 		for (int i = 0; i < paragonChoices.Length; i++) {
 			ParagonChoice paragonChoice = paragonChoices[i];

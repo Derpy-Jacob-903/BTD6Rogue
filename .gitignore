@@ -339,3 +339,12 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+# Fallback portraits for Houbr's Towers/Heros
+# Don't know how to make the fallback portraits work lol
+Resources/Buttons/FallbackPortrait/ArmyBasePortrait.png
+Resources/Buttons/FallbackPortrait/BannerMonkeyPortrait.png
+Resources/Buttons/FallbackPortrait/BoxerPortrait.png
+Resources/Buttons/FallbackPortrait/FrankensteinPortrait.png
+Resources/Buttons/FallbackPortrait/PsychomonkeyPortrait.png
+Resources/Buttons/FallbackPortrait/MonkeyMachinePortrait.png

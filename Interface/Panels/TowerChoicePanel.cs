@@ -1,9 +1,12 @@
-﻿using System;
-using System.Linq;
+﻿using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Api.Components;
 using BTD_Mod_Helper.Api.Enums;
 using BTD_Mod_Helper.Extensions;
+using Il2CppAssets.Scripts.Models.Towers;
+using Il2CppAssets.Scripts.Models.TowerSets;
 using MelonLoader;
+using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,22 +44,36 @@ public class TowerChoicePanel : RoguePanel {
 
 		TowerChoice[] towerChoices = TowerUtil.CreateValidTowerChoices(BTD6Rogue.rogueGame);
 		if (towerChoices == null) { BTD6Rogue.rogueGame.towerManager.UnlockAllTowers(); towerChoices = TowerUtil.CreateValidTowerChoices(BTD6Rogue.rogueGame); }
+        if (ModifierUtil.HasModifier<OBinaryModifier>()) { var binaryChoices = towerChoices.ToList(); binaryChoices.Remove(binaryChoices.Last()); towerChoices = binaryChoices.ToArray(); }
 
-		for (int i = 0; i < towerChoices.Length; i++) {
+        for (int i = 0; i < towerChoices.Length; i++) {
 			TowerChoice towerChoice = towerChoices[i];
-			BTD6Rogue.rogueGame.towerManager.LockTowerPath(towerChoice.towerId, Array.IndexOf(towerChoice.towerPaths, towerChoice.towerPaths.Max()));
+			if (towerChoice.towerModel is null)
+			{ BTD6Rogue.rogueGame.towerManager.LockTowerPath(towerChoice.towerId, 0); BTD6Rogue.rogueGame.towerManager.LockTowerPath(towerChoice.towerId, 1); BTD6Rogue.rogueGame.towerManager.LockTowerPath(towerChoice.towerId, 2); i--; continue; }
+            BTD6Rogue.rogueGame.towerManager.LockTowerPath(towerChoice.towerId, Array.IndexOf(towerChoice.towerPaths, towerChoice.towerPaths.Max()));
 
-			string buttonSprite = VanillaSprites.TowerContainerPrimary;
+			string buttonSprite = ModContent.GetTextureGUID<BTD6Rogue>("TowerContainerNeutral");
 			string towerSet = towerChoice.towerModel.GetTowerSet();
-			if (towerSet == "Military") {
+			if (towerSet == "Hero") {
+				buttonSprite = VanillaSprites.TowerContainerHero;
+			}
+			/*else if (towerSet == "Items" || towerSet == "PowersInShop-Powers" || towerSet == "SpecialAgents-SpecialAgentSet") {
+				buttonSprite = ModContent.GetTextureGUID<BTD6Rogue>("TowerContainerPower");
+			}*/
+			else if (towerSet == "Primary") {
+				buttonSprite = VanillaSprites.TowerContainerPrimary;
+			}
+			else if (towerSet == "Military") {
 				buttonSprite = VanillaSprites.TowerContainerMilitary;
-			} else if (towerSet == "Magic") {
+			}
+			else if (towerSet == "Magic") {
 				buttonSprite = VanillaSprites.TowerContainerMagic;
-			} else if (towerSet == "Support") {
+			}
+			else if (towerSet == "Support") {
 				buttonSprite = VanillaSprites.TowerContainerSupport;
 			}
 
-			ModHelperButton button = towerRow.AddButton(new Info("Tower Button", InfoPreset.Flex), buttonSprite, new Action(() => ChooseTower(towerChoice)));
+            ModHelperButton button = towerRow.AddButton(new Info("Tower Button", InfoPreset.Flex), buttonSprite, new Action(() => ChooseTower(towerChoice)));
 
 			AspectRatioFitter arf = button.gameObject.AddComponent<AspectRatioFitter>();
 			arf.aspectMode = AspectRatioFitter.AspectMode.HeightControlsWidth;
@@ -78,4 +95,20 @@ public class TowerChoicePanel : RoguePanel {
 
 		active = true;
 	}
+    public static string GetFallbackPortrait(TowerModel tower)
+    {
+        if (tower.IsHero()) {
+            return ModContent.GetTextureGUID<BTD6Rogue>("UnknownHeroPortrait");
+        }
+        if (tower.isParagon) {
+            return ModContent.GetTextureGUID<BTD6Rogue>("UnknownParagonPortrait");
+        }
+        if (tower.isSubTower || tower.isGeraldoItem) {
+            return ModContent.GetTextureGUID<BTD6Rogue>("UnknownSubTowerPortrait");
+        } 
+		if (tower.GetTowerSet() == "Items" || tower.GetTowerSet() == "PowersInShop-Powers" || tower.GetTowerSet() == "SpecialAgents-SpecialAgentSet") {
+            return ModContent.GetTextureGUID<BTD6Rogue>("UnknownPowerPortrait");
+        }
+        return ModContent.GetTextureGUID<BTD6Rogue>("UnknownTowerPortrait");
+    }
 }

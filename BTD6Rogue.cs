@@ -5,7 +5,6 @@ using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppInterop.Runtime;
 using MelonLoader.NativeUtils;
 using System.Runtime.InteropServices;
-using Il2CppInterop.Common;
 using HarmonyLib;
 
 
@@ -16,7 +15,7 @@ namespace BTD6Rogue;
 
 // Handles the creation of the RogueGame instance and logging
 // Outside of this functionality, BTD6Rogue should not be used to keep code organized
-public class BTD6Rogue : BloonsTD6Mod {
+public partial class BTD6Rogue : BloonsTD6Mod {
 
 	// Static instance of BTD6 Rogue, makes it easy to access lol
 	public static BTD6Rogue mod = null!;
@@ -67,83 +66,6 @@ public class BTD6Rogue : BloonsTD6Mod {
         {
             ModHelper.Msg<BTD6Rogue>("[BTD6Rogue-v" + ModHelperData.Version + "] (Debug) " + caller + ": " + message);
         }
-    }
-
-    // Native Patch on Bloon.Degrade
-    // Credit to GrahamKracker for figuring this out <3
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    private delegate void Bloon_DegradeDelegate(
-            nint @this,
-            nint projectile,
-            byte createEffect,
-            nint tower,
-            byte blockSpawnChildren,
-            NullableInt powerActivatedByPlayerId,
-            nint methodInfo
-        );
-
-    private static NativeHook<Bloon_DegradeDelegate> BloonDegradeHook;
-    private static Bloon_DegradeDelegate DegradeDelegate;
-
-    public override unsafe void OnLateInitializeMelon()
-    {
-        #pragma warning disable CS8605 // Unboxing a possibly null value.
-        nint originalMethod = *(nint*)
-            (nint)
-                Il2CppInteropUtils
-                    .GetIl2CppMethodInfoPointerFieldForGeneratedMethod(
-                        AccessTools.Method(typeof(Bloon), nameof(Bloon.Degrade))
-                    )
-                    .GetValue(null);
-        #pragma warning restore CS8605 // Unboxing a possibly null value.
-
-        DegradeDelegate = Degrade;
-
-        nint delegatePointer = Marshal.GetFunctionPointerForDelegate(DegradeDelegate);
-        NativeHook<Bloon_DegradeDelegate> hook = new NativeHook<Bloon_DegradeDelegate>(
-            originalMethod,
-            delegatePointer
-        );
-
-        hook.Attach();
-
-        BloonDegradeHook = hook;
-    }
-
-    private void Degrade(
-        nint @this,
-        nint projectile,
-        byte createEffect,
-        nint tower,
-        byte blockSpawnChildren,
-        NullableInt powerActivatedByPlayerId,
-        nint methodInfo
-    )
-    {
-        //before here is prefix
-        BloonDegradeHook.Trampoline(
-            @this,
-            projectile,
-            createEffect,
-            tower,
-            blockSpawnChildren,
-            powerActivatedByPlayerId,
-            methodInfo
-        );
-        //after here is postfix
-        var __instance = IL2CPP.PointerToValueGeneric<Bloon>(@this, false, false)!; //this is your bloon
-
-        if (__instance.bloonModel.isBoss && BTD6Rogue.rogueGame is not null)
-        {
-            BTD6Rogue.rogueGame.roundManager.BossDefeated();
-        }
-        //ModLogger.Msg(__instance.bloonModel.name);
-    }
-
-    private struct NullableInt
-    {
-        public byte HasValue;
-        public int Value;
     }
 }
 

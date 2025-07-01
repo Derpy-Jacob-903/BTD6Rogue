@@ -2,6 +2,7 @@
 using BTD_Mod_Helper.Api.Towers;
 using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Models.Towers;
+using Il2CppAssets.Scripts.Unity;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using System;
 using System.Collections.Generic;
@@ -20,46 +21,44 @@ public static class TowerUtil {
 		foreach (RogueTower tower in ModContent.GetContent<RogueTower>()) {
             if (tower.GetBaseTower() is null)
             {
-                BTD6Rogue.LogMessage("The RogueTower " + tower.Name + "'s BaseTowerId (" + tower.BaseTowerId + ") returns a null tower. It has been disabled.", tower, ErrorLevels.Error);
+                BTD6Rogue.LogMessage("The RogueTower " + tower.Name + "'s BaseTowerId (" + tower.BaseTowerId + ") returns a null tower. It has been disabled.", tower, ErrorLevels.Debug);
                 continue;
             }
-
             if (tower.GetBaseTower().towerSet == Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Hero)
             {
-                BTD6Rogue.LogMessage("The RogueTower " + tower.Name + "'s BaseTowerId (" + tower.BaseTowerId + ") returns a tower in the Hero TowerSet. This may cause issues.", tower, ErrorLevels.Warning);
+                BTD6Rogue.LogMessage("The RogueTower " + tower.Name + "'s BaseTowerId (" + tower.BaseTowerId + ") returns a tower in the Hero TowerSet. This may cause issues.", tower, ErrorLevels.Debug);
             }
-
             if (tower.GetBaseTower().towerSet == Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Paragon)
             {
-                BTD6Rogue.LogMessage("The RogueTower " + tower.Name + "'s BaseTowerId (" + tower.BaseTowerId + ") returns a (base) tower in the Paragon TowerSet. This may cause issues.", tower, ErrorLevels.Warning);
+                BTD6Rogue.LogMessage("The RogueTower " + tower.Name + "'s BaseTowerId (" + tower.BaseTowerId + ") returns a (base) tower in the Paragon TowerSet. This may cause issues.", tower, ErrorLevels.Debug);
             }
-
             if (game.towerManager.disabledTowerSets.Contains(tower.GetBaseTower().towerSet)) {
 				continue;
 			}
-
 			if (game.towerManager.disableWaterTowers && tower.GetBaseTower().IsExclusivelyWaterBased) {
 				continue;
 			}
 
 			enabledTowers.Add(tower);
 		}
-
 		return enabledTowers;
 	}
 
-	public static TowerChoice[] GetTier0TowersChoiceData(RogueGame game) {
+	public static TowerChoice[] GetTier0TowersChoiceData(RogueGame game)
+	{
 		List<TowerChoice> towerChoices = new List<TowerChoice>();
 
 		List<RogueTower> rogueTowers = GetEnabledRogueTowers(game);
-		foreach (RogueTower rogueTower in rogueTowers) {
+		foreach (RogueTower rogueTower in rogueTowers)
+		{
+			if (rogueTower.ChoiceBlacklisted) { continue; }
 			towerChoices.Add(CreateTowerChoiceData(rogueTower, [0, 0, 0]));
 		}
 
 		return towerChoices.ToArray();
 	}
 
-	public static TowerChoice CreateTowerChoiceData(RogueTower tower, int[] tiers) {
+    public static TowerChoice CreateTowerChoiceData(RogueTower tower, int[] tiers) {
 		TowerModel towerModel = tower.GetTower(tiers);
 		int path = Array.IndexOf(tiers, tiers.Max());
 
@@ -144,27 +143,28 @@ public static class TowerUtil {
 		return towerChoices;
 	}
 
-	public static TowerChoice[] CreateValidTowerChoices(RogueGame rogueGame) {
+	public static TowerChoice[] CreateValidTowerChoices(RogueGame rogueGame)
+	{
 		List<TowerChoice> towers = new List<TowerChoice>();
 
 		List<TowerChoice> possibleChoices = CreateAllValidTowerChoices(rogueGame);
-		if (possibleChoices.Count < 3) { return null!; }
+		if (possibleChoices.Count < 3 || (possibleChoices.Count < 2 && ModifierUtil.HasModifier<OBinaryModifier>())) { return null!; }
 
-		while (towers.Count < 3) {
+		while (towers.Count < 3 || (towers.Count < 2 && ModifierUtil.HasModifier<OBinaryModifier>()))
+		{
 			TowerChoice towerChoice = possibleChoices[new Random().Next(possibleChoices.Count)];
-			if (towers.Contains(towerChoice)) { continue; }
+			if (towers.Contains(towerChoice) || towerChoice.rogueTower.ChoiceBlacklisted) { continue; }
 			towers.Add(towerChoice);
 		}
-
 		return towers.ToArray();
 	}
 
-	public static RogueTower GetRandomTower() {
+    public static RogueTower GetRandomTower() {
 		List<RogueTower> towers = ModContent.GetContent<RogueTower>();
 		return towers[new Random().Next(towers.Count)];
 	}
 
-	/*
+    /*
 	public static string[] GetAllTowerSets() {
 		List<string> towerSets = new List<string>() { "Primary", "Military", "Magic", "Support" };
 

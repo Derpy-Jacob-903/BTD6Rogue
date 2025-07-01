@@ -33,13 +33,12 @@ public class TowerManager(InGame game) {
 			} else {
 				towerMaxes.Add(tower, 0);
 			}
-		}
-
+        }
 		towerInventory.towerMaxes = towerMaxes;
 		UpdateInventory();
 	}
 
-	public void DisableTowerSet(TowerSet towerSet, bool towerSetDisabled = true) {
+    public void DisableTowerSet(TowerSet towerSet, bool towerSetDisabled = true) {
 		if (towerSetDisabled && !disabledTowerSets.Contains(towerSet)) {
 			disabledTowerSets.Add(towerSet);
 		} else if (!towerSetDisabled && disabledTowerSets.Contains(towerSet)) {
@@ -47,7 +46,7 @@ public class TowerManager(InGame game) {
 		}
 	}
 
-	public void DisableWaterTowers(bool waterTowersDisabled = true) {
+    public void DisableWaterTowers(bool waterTowersDisabled = true) {
 		disableWaterTowers = waterTowersDisabled;
 	}
 

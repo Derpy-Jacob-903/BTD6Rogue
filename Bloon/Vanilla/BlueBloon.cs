@@ -2,6 +2,7 @@
 
 public class BlueBloon : RogueBloon {
     public override string BaseBloonId => "Blue";
+    public override string MasteryBloonId => "Green";
     public override int StartRound => 3;
     public override int EndRound => 14;
 

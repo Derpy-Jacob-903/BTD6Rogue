@@ -2,6 +2,7 @@
 
 public class LeadBloon : RogueBloon {
     public override string BaseBloonId => "Lead";
+    public override string MasteryBloonId => "Zebra";
     public override int StartRound => 28;
     public override int EndRound => -1;
 
@@ -14,6 +15,7 @@ public class LeadBloon : RogueBloon {
     public override int RegrowStartRound => 46;
     public override int RegrowEndRound => -1;
     public override bool Fortified => true;
+    public override bool? FortifiedIfMastery => false;
     public override int FortifiedStartRound => 51;
     public override int FortifiedEndRound => -1;
 }

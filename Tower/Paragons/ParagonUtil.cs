@@ -14,12 +14,12 @@ public static class ParagonUtil {
 
             if (tower.GetBaseTower() is null || tower.GetBaseParagon() is null)
             {
-                BTD6Rogue.LogMessage("The RogueParagon " + tower.Name + "'s BaseTowerId (" + tower.BaseTowerId + ") returns a null tower.", tower, ErrorLevels.Error);
+                BTD6Rogue.LogMessage("The RogueParagon " + tower.Name + "'s BaseTowerId (" + tower.BaseTowerId + ") returns a null tower.", tower, ErrorLevels.Debug);
                 continue;
             }
-            if (tower.GetBaseTower().towerSet == Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Hero)
+            if (tower.GetBaseTower().towerSet != Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Paragon)
             {
-                BTD6Rogue.LogMessage("The RogueParagon " + tower.Name + "'s BaseTowerId (" + tower.BaseTowerId + ") returns a tower in the Hero TowerSet. This may cause issues.", tower, ErrorLevels.Warning);
+                BTD6Rogue.LogMessage("The RogueParagon " + tower.Name + "'s BaseTowerId (" + tower.BaseTowerId + ") returns a 'Paragon' outside the Paragon TowerSet. This may cause issues.", tower, ErrorLevels.Debug);
             }
             if (game.towerManager.disabledTowerSets.Contains(Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Paragon)) {
 				continue;
@@ -68,7 +68,7 @@ public static class ParagonUtil {
 		List<ParagonChoice> paragons = new List<ParagonChoice>();
 
 		List<ParagonChoice> possibleChoices = CreateAllValidParagonChoices(rogueGame);
-		if (possibleChoices.Count < 3) { return null!; }
+		if (possibleChoices.Count < 3 || (possibleChoices.Count < 2 && ModifierUtil.HasModifier<OBinaryModifier>())) { return null!; }
 
 		while (paragons.Count < 3) {
 			ParagonChoice towerChoice = possibleChoices[new Random().Next(possibleChoices.Count)];

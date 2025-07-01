@@ -12,10 +12,10 @@ public static class HeroUtil {
 		foreach (RogueHero tower in ModContent.GetContent<RogueHero>()) {
             if (tower.GetBaseHero() is null)
             {
-                BTD6Rogue.LogMessage("The RogueHero " + tower.Name + "'s BaseHeroId (" + tower.BaseHeroId + ") returns a null tower. They have been disabled.", tower, ErrorLevels.Error);
+                BTD6Rogue.LogMessage("The RogueHero " + tower.Name + "'s BaseHeroId (" + tower.BaseHeroId + ") returns a null tower. They have been disabled.", tower, ErrorLevels.Debug);
                 continue;
             }
-            if (tower.GetBaseHero().towerSet != Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Hero)
+            if (tower.GetBaseHero().towerSet != Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Hero && tower.GetBaseHero().upgrades != new Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppReferenceArray<Il2CppAssets.Scripts.Models.Towers.Upgrades.UpgradePathModel>([]))
             {
                 BTD6Rogue.LogMessage("The RogueTower " + tower.Name + "'s BaseTowerId (" + tower.BaseHeroId + ") returns a tower outside of the Hero TowerSet. This may cause issues.", tower, ErrorLevels.Warning);
             }
@@ -38,7 +38,8 @@ public static class HeroUtil {
 
 		List<RogueHero> rogueHeroes = GetEnabledRogueHeroes(game);
 		foreach (RogueHero rogueHero in rogueHeroes) {
-			heroChoices.Add(CreateHeroChoiceData(rogueHero));
+            if (rogueHero.ChoiceBlacklisted) { continue; }
+            heroChoices.Add(CreateHeroChoiceData(rogueHero));
 		}
 
 		return heroChoices.ToArray();
@@ -72,11 +73,11 @@ public static class HeroUtil {
 		List<HeroChoice> heroes = new List<HeroChoice>();
 
 		List<HeroChoice> possibleChoices = CreateAllValidHeroChoices(rogueGame);
-		if (possibleChoices.Count < 3) { return null!; }
+		if (possibleChoices.Count < 3 || (possibleChoices.Count < 2 && ModifierUtil.HasModifier<OBinaryModifier>())) { return null!; }
 
-		while (heroes.Count < 3) {
+		while (heroes.Count < 3 || (heroes.Count < 2 && ModifierUtil.HasModifier<OBinaryModifier>())) {
 			HeroChoice towerChoice = possibleChoices[new Random().Next(possibleChoices.Count)];
-			if (heroes.Contains(towerChoice)) { continue; }
+			if (heroes.Contains(towerChoice) || towerChoice.rogueTower.ChoiceBlacklisted) { continue; }
 			heroes.Add(towerChoice);
 		}
 

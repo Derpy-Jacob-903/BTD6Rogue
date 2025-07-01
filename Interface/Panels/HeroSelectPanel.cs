@@ -2,6 +2,7 @@
 using BTD_Mod_Helper.Api.Components;
 using BTD_Mod_Helper.Api.Enums;
 using BTD_Mod_Helper.Extensions;
+using Il2CppAssets.Scripts.Models.TowerSets;
 using MelonLoader;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,7 +34,9 @@ public class HeroSelectPanel : RoguePanel {
 				currentRow = towerSelectPanel.AddPanel(new Info("MapRow", InfoPreset.Flex), null, RectTransform.Axis.Horizontal, 50);
 			}
 			HeroChoice heroChoice = heroChoices[i];
-			ModHelperButton button = currentRow.AddButton(new Info("Tower Button", InfoPreset.Flex), VanillaSprites.YellowBtn, new Action(() => ChooseHero(heroChoice)));
+            if (heroChoice.rogueTower.SelectBlacklisted) { continue; }
+            ModHelperButton button = currentRow.AddButton(new Info("Tower Button", InfoPreset.Flex), heroChoice.towerModel.towerSet == TowerSet.Hero ? VanillaSprites.YellowBtn : VanillaSprites.BlueBtn, new Action(() => ChooseHero(heroChoice)));
+
 			AspectRatioFitter arf = button.gameObject.AddComponent<AspectRatioFitter>();
 			arf.aspectMode = AspectRatioFitter.AspectMode.HeightControlsWidth;
 			button.AddImage(new Info("Image") { AnchorMin = new Vector2(0, 0), AnchorMax = new Vector2(1, 1), Size = 50 }, heroChoice.towerImage.GetGUID());

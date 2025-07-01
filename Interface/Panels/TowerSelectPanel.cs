@@ -29,12 +29,14 @@ public class TowerSelectPanel : RoguePanel {
 
 		ModHelperPanel currentRow = null!;
 
-		for (int i = 0; i < towerChoices.Length; i++) {
-			if (i % gridWidth == 0) {
+		for (int i = 0; i < towerChoices.Length; i++)
+        {
+            if (i % gridWidth == 0) {
 				currentRow = towerSelectPanel.AddPanel(new Info("MapRow", InfoPreset.Flex), null, RectTransform.Axis.Horizontal, 50);
 			}
-			TowerChoice towerChoice = towerChoices[i];
-			ModHelperButton button = currentRow.AddButton(new Info("Tower Button", InfoPreset.Flex), VanillaSprites.YellowBtn, new Action(() => ChooseTower(towerChoice)));
+            TowerChoice towerChoice = towerChoices[i];
+            if (towerChoice.rogueTower.SelectBlacklisted) { continue; }
+            ModHelperButton button = currentRow.AddButton(new Info("Tower Button", InfoPreset.Flex), VanillaSprites.YellowBtn, new Action(() => ChooseTower(towerChoice)));
 			AspectRatioFitter arf = button.gameObject.AddComponent<AspectRatioFitter>();
 			arf.aspectMode = AspectRatioFitter.AspectMode.HeightControlsWidth;
 			button.AddImage(new Info("Image") { AnchorMin = new Vector2(0, 0), AnchorMax = new Vector2(1, 1), Size = 50 }, towerChoice.towerImage.GetGUID());

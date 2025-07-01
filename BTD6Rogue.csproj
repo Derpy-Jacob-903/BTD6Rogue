@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>BTD6Rogue</RootNamespace>
@@ -31,13 +31,14 @@
       <None Remove="Portal\**" />
     </ItemGroup>
 
-	<!-- This Imports Il2CppInterop.Common + The stuff in btd6.targets -->
-    <Import Project="BTD6Rogue.targets" /> 
+	<Import Project="..\btd6.targets" />
 
     <ItemGroup>
       <Compile Remove="Gamemode\Gamemodes\BlitzMode.cs" />
       <Compile Remove="Interface\Panels\ArtifactChoicePanel.cs" />
       <Compile Remove="Interface\Panels\InitialHeroChoicePanel.cs" />
+      <Compile Remove="Modifier\Modifiers\OForceFortifiedModifier.cs" />
+      <Compile Remove="Modifier\Modifiers\OForceLeadModifier.cs" />
       <Compile Remove="Patch\HeroAddXpPatch.cs" />
       <Compile Remove="Patch\InGame\OnMatchStartPatch.cs" />
       <Compile Remove="Patch\InGame\OnRestartPatch.cs" />
@@ -64,5 +65,8 @@
 
     <ItemGroup>
       <None Include="BTD6Rogue.sln" />
+      <None Include="Modifier\Modifiers\OForceFortifiedModifier.cs" />
+      <None Include="Modifier\Modifiers\OForceLeadModifier.cs" />
+      <None Include="Tower\Modded\TempleBase.cs" />
     </ItemGroup>
 </Project>

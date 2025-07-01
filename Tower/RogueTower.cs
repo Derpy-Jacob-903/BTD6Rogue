@@ -29,8 +29,15 @@ public abstract class RogueTower : NamedModContent {
     // Optional as it should be able to automatically generate (both so I have less work and also to provide functionality for modded towers)
     public abstract Vector2Int[] TowerAmountRanges { get; }
 
-	// Get the RogueTower's TowerModel at 0-0-0
-	public virtual TowerModel GetBaseTower() {
+    // Blacklists the RogueTower for Tower Choices/Selection
+    public virtual bool ChoiceBlacklisted => false;
+    public virtual bool SelectBlacklisted => false;
+
+    // Removes a 
+    public virtual bool ConsumeWhenPlace => false;
+
+    // Get the RogueTower's TowerModel at 0-0-0
+    public virtual TowerModel GetBaseTower() {
         return Game.instance.model.GetTowerModel(BaseTowerId);
     }
 
@@ -43,10 +50,26 @@ public abstract class RogueTower : NamedModContent {
     // Generate a random number based off the tower amount range set for a RogueTower
     public virtual int GetTowerAmount(int[] tiers) {
 		int path = Array.IndexOf(tiers, tiers.Max());
-		if (TowerAmountRanges[path].x == 0 && TowerAmountRanges[path].y == 0) {
-            return new System.Random().Next(1, 4);
-        } else {
-            return new System.Random().Next(TowerAmountRanges[path].x, TowerAmountRanges[path].y + 1);
+        if (ModifierUtil.HasModifier<OScatterbrainModifier>()){
+            if (TowerAmountRanges[path].x == 0 && TowerAmountRanges[path].y == 0)
+            {
+                return new System.Random().Next(0, 3);
+            }
+            else
+            {
+                return new System.Random().Next(Math.Max(TowerAmountRanges[path].x - 1, 0), TowerAmountRanges[path].y);
+            }
+        }
+        else 
+        {
+            if (TowerAmountRanges[path].x == 0 && TowerAmountRanges[path].y == 0)
+            {
+                return new System.Random().Next(1, 4);
+            }
+            else
+            {
+                return new System.Random().Next(TowerAmountRanges[path].x, TowerAmountRanges[path].y + 1);
+            }
         }
     }
 

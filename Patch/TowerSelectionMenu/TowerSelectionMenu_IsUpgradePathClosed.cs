@@ -1,8 +1,15 @@
-﻿using Il2CppAssets.Scripts.Unity.UI_New.InGame.TowerSelectionMenu;
-using HarmonyLib;
-using Il2CppAssets.Scripts.Unity.UI_New.InGame;
-using Il2CppAssets.Scripts.Simulation.Towers;
+﻿using BTD_Mod_Helper.Api.Hooks;
+using BTD_Mod_Helper.Api.Hooks.BloonHooks;
 using BTD_Mod_Helper.Extensions;
+using HarmonyLib;
+using Il2CppAssets.Scripts.Simulation.Bloons;
+using Il2CppAssets.Scripts.Simulation.Towers;
+using Il2CppAssets.Scripts.Unity.UI_New.InGame;
+using Il2CppAssets.Scripts.Unity.UI_New.InGame.TowerSelectionMenu;
+using Il2CppInterop.Runtime;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace BTD6Rogue;
 

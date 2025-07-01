@@ -32,5 +32,5 @@ internal static class InGame_StartMatch {
 		} else {
 			BTD6Rogue.rogueGame.GameStarted(__instance);
 		}
-	}
+    }
 }

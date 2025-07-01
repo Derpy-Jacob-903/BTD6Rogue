@@ -2,6 +2,7 @@
 using Il2CppAssets.Scripts.Data.Knowledge.RelicKnowledge;
 using Il2CppAssets.Scripts.Models.Rounds;
 using System;
+using System.Linq;
 
 namespace BTD6Rogue;
 
@@ -9,8 +10,10 @@ namespace BTD6Rogue;
 // To Do: allow for custom modifiers instead of just vanilla stuff
 public abstract class RogueBloon : NamedModContent {
 	public abstract string BaseBloonId { get; } // Base ID of the bloon (only need the Base Bloon, modifiers are handled inside class)
+    public virtual string? MasteryBloonId { get; } // Base ID of the bloon in mastery mode.
+	public virtual int MasteryMult => 1; //
 
-	public virtual int StartRound => -1; // The lowest round number where this bloon can spawn
+    public virtual int StartRound => -1; // The lowest round number where this bloon can spawn
 	public virtual int EndRound => -1; // The highest round number where this bloon can spawn
 
 	public virtual int MinAmount => 1; // Minimum amount of these bloons that can spawn while spawning
@@ -18,27 +21,37 @@ public abstract class RogueBloon : NamedModContent {
 
 	public virtual int BloonRbe => 1; // The "Red Bloon Equivalent" of the bloon
 	public virtual bool MoabClass => false;
+    public virtual bool MoabClassMastery => false;
 
-	// Whether or not the modifier exists on the bloon
-	// The round it can start spawning it
-	// The round it stops spawning it
+    // Whether or not the modifier exists on the bloon
+    // Ditto but for the Mastery mode (null uses the normal value)
+    // Whether to always force the modifier on the bloon (ie. DDTs)
+    // The round it can start spawning it
+    // The round it stops spawning it
 
-	public virtual bool Camo => false;
-	public virtual int CamoStartRound => 0;
+    public virtual bool Camo => false;
+    public virtual bool? CamoIfMastery => null;
+    public virtual bool ForceCamo => false;
+    public virtual int CamoStartRound => 0;
 	public virtual int CamoEndRound => 0;
 
 	public virtual bool Regrow => false;
-	public virtual int RegrowStartRound => 0;
+    public virtual bool? RegrowIfMastery => null;
+    public virtual bool ForceRegrow => false;
+    public virtual int RegrowStartRound => 0;
 	public virtual int RegrowEndRound => 0;
 
 	public virtual bool Fortified => false;
-	public virtual int FortifiedStartRound => 0;
+    public virtual bool? FortifiedIfMastery => null;
+    public virtual bool ForceFortified => false;
+    public virtual int FortifiedStartRound => 0;
 	public virtual int FortifiedEndRound => 0;
 
-	public virtual BloonGroupModel GenerateBloonGroup(int round, float expectedRbe, float start, float end, bool camo, bool regrow, bool fortified) {
+    public virtual BloonGroupModel GenerateBloonGroup(int round, float expectedRbe, float start, float end, bool camo, bool regrow, bool fortified) {
 		int bloonAmount = GetBloonAmount(round, expectedRbe, fortified);
 
-		string newBloonId = BaseBloonId;
+        string newBloonId = BaseBloonId;
+        if (BTD6Rogue.rogueGame.modifiers.Any(m => m is OAMasteryModeModifier) && MasteryBloonId is not null) { newBloonId = MasteryBloonId; bloonAmount *= MasteryMult; }
 
 		if (regrow) { newBloonId += "Regrow"; }
 		if (fortified) { newBloonId += "Fortified"; }

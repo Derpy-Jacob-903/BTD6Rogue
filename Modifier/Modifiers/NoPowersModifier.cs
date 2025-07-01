@@ -13,7 +13,7 @@ public class NoPowersModifier : RogueModifier {
 	public override void ApplyRogueModifier(ModModel model) {
 		model.RemoveMutator<LockTowerSetModModel>("LockPowers");
 		model.AddMutator(new LockTowerSetModModel("LockPowers", Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Items));
-	}
+    }
 
 	public override void RemoveRogueModifier(ModModel model) { model.RemoveMutator<LockTowerSetModModel>("LockPowers"); }
 

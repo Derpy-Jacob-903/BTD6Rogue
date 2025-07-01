@@ -23,8 +23,7 @@ public class RogueModSettings : ModSettings {
             "Validates each RogueBloon to ensure it references existing Bloons in the GameModel. Logs warnings if invalid references are found. This is unnecessary if no new RogueBloons are being added by external mods.",
         action = () =>
         {
-            BloonValidation v = new();
-            v.ValidateAllRogueBloons();
+            BloonUtil.GetAllBloons();
             PopupScreen.instance.SafelyQueue(screen =>
             screen.ShowOkPopup($"Finished validating RogueBloons. Check the logs for details."));
         },

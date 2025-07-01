@@ -41,16 +41,21 @@ public enum TowerTag {
 	Military, // Military tower or buffs Military towers
 	Magic, // Magic tower or buffs Magic towers
 	Support, // Support tower or buffs Support towers
+	Powers, // Powers/Special Agents or buffs Powers/Special Agents
+	Heroes, // buffs Heroes
 	Water, // Placed in water
 	Land, // Placed on land
 	Normal, // Deals normal damage
 	Acid, // Deals acid damage
 	Fire, // Deals fire damage
 	Plasma, // Deals plasma damage
+	Incendiary, // Deals "incendiary" damage (Weak to Purple and Black)
 	Explosion, // Deals explosion damage
 	Shatter, // Deals shatter damage
 	Glacier, // Deals glacier damage
+	Frigid, // Deals frigid damage
 	Energy, // Deals energy damage
+	Frost, // Deals "frost" damage (Weak to Lead, Purple and White)
 	Sharp, // Deals sharp damage
 	Cold, // Deals cold damage
 	Passive, // Doesn't deal damage

@@ -6,10 +6,10 @@ namespace BTD6Rogue;
 
 public abstract class RogueHero : NamedModContent {
 	public abstract string BaseHeroId { get; }
-
-	public virtual TowerModel GetBaseHero() {
+    public virtual bool ChoiceBlacklisted => false;
+    public virtual bool SelectBlacklisted => false;
+    public virtual TowerModel GetBaseHero() {
 		return Game.instance.model.GetTowerFromId(BaseHeroId);
-
         //return Game.instance.model.GetHeroWithNameAndLevel(BaseHeroId, 1);
     }
 

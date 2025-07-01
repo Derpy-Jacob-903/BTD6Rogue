@@ -1,9 +1,11 @@
-﻿using System;
-using System.Linq;
+﻿using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Api.Components;
 using BTD_Mod_Helper.Api.Enums;
 using BTD_Mod_Helper.Extensions;
+using Il2CppAssets.Scripts.Models.TowerSets;
 using MelonLoader;
+using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,20 +43,23 @@ public class HeroChoicePanel : RoguePanel {
 
 		HeroChoice[] heroChoices = HeroUtil.CreateValidHeroChoices(BTD6Rogue.rogueGame);
 		if (heroChoices == null) { BTD6Rogue.rogueGame.towerManager.UnlockAllHeroes(); heroChoices = HeroUtil.CreateValidHeroChoices(BTD6Rogue.rogueGame); }
+        if (ModifierUtil.HasModifier<OBinaryModifier>()) { var binaryChoices = heroChoices.ToList(); binaryChoices.Remove(binaryChoices.Last()); heroChoices = binaryChoices.ToArray(); }
 
-		for (int i = 0; i < heroChoices.Length; i++) {
+        for (int i = 0; i < heroChoices.Length; i++) {
 			HeroChoice heroChoice = heroChoices[i];
 			BTD6Rogue.rogueGame.towerManager.LockHero(heroChoice.towerId);
 
-			ModHelperButton button = towerRow.AddButton(new Info("Tower Button", InfoPreset.Flex), VanillaSprites.TowerContainerHero, new Action(() => ChooseHero(heroChoice)));
+			ModHelperButton button = towerRow.AddButton(new Info("Tower Button", InfoPreset.Flex), heroChoice.towerModel.towerSet == TowerSet.Hero ? VanillaSprites.TowerContainerHero : ModContent.GetTextureGUID<BTD6Rogue>("TowerContainerNeutral"), new Action(() => ChooseHero(heroChoice)));
 
 			AspectRatioFitter arf = button.gameObject.AddComponent<AspectRatioFitter>();
 			arf.aspectMode = AspectRatioFitter.AspectMode.HeightControlsWidth;
 
-			ModHelperImage towerImage = button.AddImage(new Info("Image", InfoPreset.FillParent), heroChoice.towerImage.GetGUID());
+
+			ModHelperImage towerImage = button.AddImage(new Info("Image", InfoPreset.FillParent), heroChoice.towerImage.GetGUID()); 
+															//GUID may not correspond to a image, if so it will display a white square
 
 
-			ModHelperText towerUpgradeName = towerImage.AddText(new Info("Tower Name", InfoPreset.FillParent) { AnchorMin = new(0.05f, 0.05f), AnchorMax = new(0.95f, 0.95f) }, heroChoice.towerId, 72, Il2CppTMPro.TextAlignmentOptions.Bottom);
+            ModHelperText towerUpgradeName = towerImage.AddText(new Info("Tower Name", InfoPreset.FillParent) { AnchorMin = new(0.05f, 0.05f), AnchorMax = new(0.95f, 0.95f) }, heroChoice.towerId, 72, Il2CppTMPro.TextAlignmentOptions.Bottom);
 		}
 
 		if (BTD6Rogue.rogueGame.rerolls > 0) {

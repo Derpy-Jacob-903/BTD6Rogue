@@ -20,22 +20,25 @@ public abstract class RogueDifficulty : NamedModContent {
 		int adjustedRound = round + 1; // In code round is 1 less than displayed (index at 0 things) but in the data it's at display value so, need to adjust it
 
 		foreach (RogueBloon bloon in allBloons) {
-			if (bloon.GetBloonRbe(round, false) > maxRbe) { continue; }
+			var isMastery = ModifierUtil.HasModifier<OAMasteryModeModifier>();
+			bool isBaseReady = false;
+            if (bloon.GetBloonRbe(round, false) > maxRbe) { continue; }
 
-			Tuple<RogueBloon, List<string>> bloonData = new(bloon, []);
-			if (adjustedRound >= bloon.StartRound + BloonSendOffset && (adjustedRound <= bloon.EndRound + BloonSendOffset || bloon.EndRound == -1)) {
-				bloonData.Item2.Add("None");
+            Tuple<RogueBloon, List<string>> bloonData = new(bloon, []);
+			if ((adjustedRound >= bloon.StartRound + BloonSendOffset) && (adjustedRound <= bloon.EndRound + BloonSendOffset || bloon.EndRound == -1)) {
+				isBaseReady = true;
+                bloonData.Item2.Add("None");
 			}
 
-			if (bloon.Regrow && adjustedRound >= bloon.RegrowStartRound + BloonSendOffset && (adjustedRound <= bloon.RegrowEndRound + BloonSendOffset || bloon.EndRound == -1)) {
+			if ((isMastery && (bloon.RegrowIfMastery != null) ? (bool)bloon.RegrowIfMastery : bloon.Regrow) && ((adjustedRound >= bloon.RegrowStartRound + BloonSendOffset && (adjustedRound <= bloon.RegrowEndRound + BloonSendOffset || bloon.EndRound == -1) || (ModifierUtil.HasModifier<OForceRegrowModifier>() && isBaseReady)))) {
 				bloonData.Item2.Add("Regrow");
 			}
 
-			if (bloon.Camo && adjustedRound >= bloon.CamoStartRound + BloonSendOffset && (adjustedRound <= bloon.CamoEndRound + BloonSendOffset || bloon.EndRound == -1)) {
+			if ((isMastery && (bloon.CamoIfMastery != null) ? (bool)bloon.CamoIfMastery : bloon.Camo) && ((adjustedRound >= bloon.CamoStartRound + BloonSendOffset && (adjustedRound <= bloon.CamoEndRound + BloonSendOffset || bloon.EndRound == -1) || (ModifierUtil.HasModifier<OForceCamoModifier>() && isBaseReady)))) {
 				bloonData.Item2.Add("Camo");
 			}
 
-			if (bloon.Fortified && adjustedRound >= bloon.FortifiedStartRound + BloonSendOffset && (adjustedRound <= bloon.FortifiedEndRound + BloonSendOffset || bloon.EndRound == -1)) {
+			if ((isMastery && (bloon.FortifiedIfMastery != null) ? (bool)bloon.FortifiedIfMastery : bloon.Fortified) && ((adjustedRound >= bloon.FortifiedStartRound + BloonSendOffset) && (adjustedRound <= bloon.FortifiedEndRound + BloonSendOffset || bloon.EndRound == -1) /*|| ModifierUtil.HasModifier<OForceFortifiedModifier>()*/)) {
 				if (bloon.GetBloonRbe(round, true) < maxRbe) { bloonData.Item2.Add("Fortified"); }
 			}
 

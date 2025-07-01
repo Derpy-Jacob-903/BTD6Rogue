@@ -40,7 +40,7 @@ public class SelectModifierMenu : ModGameMenu<ExtraSettingsScreen> {
 			if (x % 6 == 0) {
 				currentRow = rogueMenu.AddPanel(
 					new Info("ModifierRow", 2000, 400) { FlexWidth = 1, FlexHeight = 2 },
-					null, RectTransform.Axis.Horizontal, 60, 60);
+					null, RectTransform.Axis.Horizontal, 50, 50);
 			}
 
 			var modifierCheckbox = currentRow.AddCheckbox(
@@ -49,7 +49,7 @@ public class SelectModifierMenu : ModGameMenu<ExtraSettingsScreen> {
 			AspectRatioFitter arf = modifierCheckbox.AddComponent<AspectRatioFitter>();
 			arf.aspectMode = AspectRatioFitter.AspectMode.HeightControlsWidth;
 
-			modifierCheckbox.AddText(new Info("", InfoPreset.FillParent), modifier.DisplayName, 72, Il2CppTMPro.TextAlignmentOptions.Bottom);
+			modifierCheckbox.AddText(new Info("", InfoPreset.FillParent), modifier.DisplayName, 60, Il2CppTMPro.TextAlignmentOptions.Bottom);
 
 			x += 1;
 		}

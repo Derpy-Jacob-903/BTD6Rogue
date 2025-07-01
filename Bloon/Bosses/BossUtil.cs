@@ -44,7 +44,11 @@ public static class BossUtil {
 			"A sudden ripple in the cosmos can be felt"
 		};
 
-		switch (boss) {
+        List<string> BlastapopoulosHints = new List<string>() {
+            "It's kinda hot"
+        };
+
+        switch (boss) {
 			case "RogueBloonarius":
 				return BloonariusHints[new Random().Next(BloonariusHints.Count)];
 			case "RogueVortex":
@@ -55,7 +59,9 @@ public static class BossUtil {
 				return DreadbloonHints[new Random().Next(DreadbloonHints.Count)];
 			case "RoguePhayze":
 				return PhayzeHints[new Random().Next(PhayzeHints.Count)];
-		}
+            case "RogueBlastapopoulos":
+                return BlastapopoulosHints[new Random().Next(PhayzeHints.Count)];
+        }
 		return "Error Message Lol";
 	}
 

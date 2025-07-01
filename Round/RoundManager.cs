@@ -45,9 +45,9 @@ public class RoundManager(InGame game) {
 			bool isCamo = false;
 			bool isRegrow = false;
 			bool isFortified = false;
-			if (bloonData.Item2.Contains("Camo")) { isCamo = new Random().Next(4) == 0; }
-			if (bloonData.Item2.Contains("Regrow")) { isRegrow = new Random().Next(4) == 0; }
-			if (bloonData.Item2.Contains("Fortified")) { isFortified = new Random().Next(4) == 0; }
+			if (bloonData.Item2.Contains("Camo")) { isCamo = new Random().Next(4) == 0 || bloonData.Item1.ForceCamo || ModifierUtil.HasModifier<OForceCamoModifier>(); }
+			if (bloonData.Item2.Contains("Regrow")) { isRegrow = new Random().Next(4) == 0 || bloonData.Item1.ForceRegrow || ModifierUtil.HasModifier<OForceRegrowModifier>(); }
+			if (bloonData.Item2.Contains("Fortified")) { isFortified = new Random().Next(4) == 0 || bloonData.Item1.ForceFortified /*|| ModifierUtil.HasModifier<OForceFortifiedModifier>()*/; }
 
 			int nextIncrease = 0 + new Random().Next(600) + 200;
 			BloonGroupModel bgm = bloonData.Item1.GenerateBloonGroup(round, groupRbe, 0, nextIncrease, isCamo, isRegrow, isFortified);
@@ -142,11 +142,11 @@ public class RoundManager(InGame game) {
 			bool isRegrow = false;
 			bool isFortified = false;
 
-			if (bloonData.Item2.Contains("Camo")) { isCamo = new Random().Next(4) == 0; }
-			if (bloonData.Item2.Contains("Regrow")) { isRegrow = new Random().Next(4) == 0; }
-			if (bloonData.Item2.Contains("Fortified")) { isFortified = new Random().Next(4) == 0; }
+            if (bloonData.Item2.Contains("Camo")) { isCamo = new Random().Next(4) == 0 || bloonData.Item1.ForceCamo || ModifierUtil.HasModifier<OForceCamoModifier>(); }
+            if (bloonData.Item2.Contains("Regrow")) { isRegrow = new Random().Next(4) == 0 || bloonData.Item1.ForceRegrow || ModifierUtil.HasModifier<OForceRegrowModifier>(); }
+            if (bloonData.Item2.Contains("Fortified")) { isFortified = new Random().Next(4) == 0 || bloonData.Item1.ForceFortified /*|| ModifierUtil.HasModifier<OForceFortifiedModifier>()*/; }
 
-			bloonGroupModels.Add(bloonData.Item1.GenerateBloonGroup(round, groupRbe, mincrease, nextIncrease, isCamo, isRegrow, isFortified));
+            bloonGroupModels.Add(bloonData.Item1.GenerateBloonGroup(round, groupRbe, mincrease, nextIncrease, isCamo, isRegrow, isFortified));
 			int generatedGroupAmount = bloonData.Item1.GetBloonAmount(round, groupRbe, isFortified);
 			int generatedGroupRbe = bloonData.Item1.GetGroupRbe(round, generatedGroupAmount, isFortified);
 			remainingRbe -= generatedGroupRbe;
