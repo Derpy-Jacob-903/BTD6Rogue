@@ -14,7 +14,7 @@ public class TowerSelectPanel : RoguePanel {
 	public void ChooseTower(TowerChoice towerChoice) {
 		if (!active) { return; }
 		active = false;
-		towerChoice.towerAmount = 1;
+		towerChoice.towerAmount = towerChoice.rogueTower.GetTowerAmountForChoice();
 		encounter.ProcessChoice(towerChoice);
 		DestroyPanel();
 	}

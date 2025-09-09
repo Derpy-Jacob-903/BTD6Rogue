@@ -3,6 +3,7 @@ using System;
 
 namespace BTD6Rogue
 {
+    [Obsolete("Bloon Validation has been moved to BloonUtil.")]
     public static class BloonValidation
     {
         [Obsolete("Moved to BloonUtil.")]

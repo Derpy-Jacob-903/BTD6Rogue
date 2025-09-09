@@ -9,11 +9,22 @@ public class GameStartEncounter : RogueEncounter {
 
 	public override void StartEncounter() {
 		if (ModifierUtil.HasModifier<ODraftModifier>()) {
-            if (!BTD6Rogue.rogueGame.towerManager.disabledTowerSets.Contains(Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Hero)) { BTD6Rogue.rogueGame.panelManager.AppendPanel("HeroChoicePanel", this); }
-            BTD6Rogue.rogueGame.panelManager.AppendPanel("TowerChoicePanel", this);
-			BTD6Rogue.rogueGame.panelManager.AppendPanel("TowerChoicePanel", this);
-            BTD6Rogue.rogueGame.panelManager.AppendPanel("TowerChoicePanel", this, true);
-			return;
+            /*if (ModifierUtil.HasModifier<OPrismaticShardModifier>())
+            {
+                if (!BTD6Rogue.rogueGame.towerManager.disabledTowerSets.Contains(Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Hero)) { BTD6Rogue.rogueGame.panelManager.AppendPanel("PrismaticChoicePanel", this); }
+                BTD6Rogue.rogueGame.panelManager.AppendPanel("PrismaticChoicePanel", this);
+                BTD6Rogue.rogueGame.panelManager.AppendPanel("PrismaticChoicePanel", this);
+                BTD6Rogue.rogueGame.panelManager.AppendPanel("PrismaticChoicePanel", this);
+                return;
+            }
+			else*/
+            { 
+                if (!BTD6Rogue.rogueGame.towerManager.disabledTowerSets.Contains(Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Hero)) { BTD6Rogue.rogueGame.panelManager.AppendPanel("HeroChoicePanel", this); }
+                BTD6Rogue.rogueGame.panelManager.AppendPanel("TowerChoicePanel", this);
+                BTD6Rogue.rogueGame.panelManager.AppendPanel("TowerChoicePanel", this);
+                BTD6Rogue.rogueGame.panelManager.AppendPanel("TowerChoicePanel", this, true);
+                return;
+            }
         }
 		else {
             if (!BTD6Rogue.rogueGame.towerManager.disabledTowerSets.Contains(Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Hero)) { BTD6Rogue.rogueGame.panelManager.AppendPanel("HeroSelectPanel", this); }

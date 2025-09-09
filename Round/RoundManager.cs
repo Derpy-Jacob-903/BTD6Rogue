@@ -2,6 +2,7 @@
 using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Models.Rounds;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
+using Il2CppAssets.Scripts.Unity.UI_New.Popups;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -15,8 +16,10 @@ public class RoundManager(InGame game) {
 	public string nextBoss = "";
 
 	public bool activeBoss = false;
+    public Thread? cashlessThread = null;
+    public bool? isCashless = null;
 
-	public int randMincrease = 400;
+    public int randMincrease = 400;
 	public int minIncrease = 600;
 
 	private int previousSpawn = 0;
@@ -24,19 +27,43 @@ public class RoundManager(InGame game) {
 	public void BossSpawned() {
 		activeBoss = true;
 		previousSpawn = 5000; // MS until start spawning cashless bloons
-		Thread t = new Thread(new ThreadStart(TrySpawnCashlessBloons));
-		t.Start();
-	}
+        cashlessThread = new Thread(new ThreadStart(TrySpawnCashlessBloons));
+        cashlessThread.Start();
+    }
 
-	public void TrySpawnCashlessBloons() {
-		int round = game.bridge.GetCurrentRound();
-		while (activeBoss) {
-			Thread.Sleep(previousSpawn);
-			if (!activeBoss) { break; } // check if active boss got changed during Thread.Sleep
-			if (game == null || game.bridge == null) { break; }
-			if (round != game.bridge.GetCurrentRound()) { break; }
-			if (BTD6Rogue.rogueGame == null) { break; }
-			int groupRbe = GetRoundRbe(round) / 15;
+	[Obsolete("This doesn't help/work.")]
+    public void KillCashlessBloonsThread()
+    {
+		if (BTD6Rogue.rogueGame == null) { return; }
+        if (BTD6Rogue.rogueGame.roundManager == null) { return; }
+        Thread? thread = BTD6Rogue.rogueGame.roundManager.cashlessThread;
+        if (thread != null && thread.IsAlive)
+        {
+            BTD6Rogue.rogueGame.roundManager.activeBoss = false;
+			if (!thread.Join(5000)) { BTD6Rogue.LogMessage("cashlessThread did not shut down in time. It may cause a crash next time a boss spawns.", "RoundManager.KillCashlessBloonsThread", ErrorLevels.Critical); }
+        }
+        //BTD6Rogue.rogueGame.roundManager.cashlessThread = null;
+    }
+
+    public void TrySpawnCashlessBloons() {
+		while (activeBoss)
+        {
+            //game = InGame.instance;
+            Thread.Sleep(previousSpawn);
+            ///I FUCKING HATE THIS BUG HHHH
+            //if (!IsBridgeSafe()) { break; } //this just causes more proplums
+            //if (!IsBridgeSafe()) { game = InGame.instance; } //this just causes more proplums
+            /*if (!IsBridgeSafe()) //TODO: dispose of RoundManager when we restart the run 
+            {
+                BTD6Rogue.LogMessage("TrySpawnCashlessBloons Thread is using a stale InGame instance. It WILL cause a crash next time a boss spawns.", "RoundManager.TrySpawnCashlessBloons", ErrorLevels.Critical);
+                throw new AccessViolationException("TrySpawnCashlessBloons Thread is using a stale InGame instance. It WILL cause a FATAL AccessViolationException next time a boss spawns.");
+                //break;
+            }*/
+            if (!activeBoss) { break; } // check if active boss got changed during Thread.Sleep
+            if (game == null || game.bridge == null) { break; }
+            if (BTD6Rogue.rogueGame == null) { break; }
+            int round = game.bridge.GetCurrentRound();
+            int groupRbe = GetRoundRbe(round) / 15;
 			RogueDifficulty difficulty = BTD6Rogue.rogueGame.difficulty;
 			List<Tuple<RogueBloon, List<string>>> sendableBloons = difficulty.GetSendableRogueBloons(round + 1, groupRbe);
 			if (sendableBloons.Count < 1) { continue; }
@@ -54,9 +81,25 @@ public class RoundManager(InGame game) {
 			game.bridge.SpawnBloons(bgm.GetEmissions(), round, 5000);
 			previousSpawn = nextIncrease * 3; // Change previous spawn timer based off the bloon group spawned just now
 		}
-	}
+    }
 
-	public void BossDefeated() {
+    public bool IsBridgeSafe()
+    {
+        try
+        {
+            var bridge = game?.bridge;
+            if (bridge == null) return false;
+            int round = bridge.GetCurrentRound();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+
+    public void BossDefeated() {
 		activeBoss = false;
 	}
 

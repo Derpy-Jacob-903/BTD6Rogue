@@ -17,7 +17,7 @@ public static class HeroUtil {
             }
             if (tower.GetBaseHero().towerSet != Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Hero && tower.GetBaseHero().upgrades != new Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppReferenceArray<Il2CppAssets.Scripts.Models.Towers.Upgrades.UpgradePathModel>([]))
             {
-                BTD6Rogue.LogMessage("The RogueTower " + tower.Name + "'s BaseTowerId (" + tower.BaseHeroId + ") returns a tower outside of the Hero TowerSet. This may cause issues.", tower, ErrorLevels.Warning);
+                BTD6Rogue.LogMessage("The RogueHero " + tower.Name + "'s BaseTowerId (" + tower.BaseHeroId + ") returns a tower outside of the Hero TowerSet. This may cause issues.", tower, ErrorLevels.Warning);
             }
             if (game.towerManager.disabledTowerSets.Contains(Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Hero)) {
 				continue;

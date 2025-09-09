@@ -57,7 +57,10 @@ public class PanelManager {
 			case "ParagonChoicePanel":
 				panel.AddComponent<ParagonChoicePanel>();
 				break;
-		}
+            case "PrismChoicePanel":
+                panel.AddComponent<PrismChoicePanel>();
+                break;
+        }
 		RoguePanel roguePanel = panel.GetComponent<RoguePanel>();
 
 		roguePanel.SetupPanel(InGame.instance, InGame.instance.uiRect, panel, panelEncounter);

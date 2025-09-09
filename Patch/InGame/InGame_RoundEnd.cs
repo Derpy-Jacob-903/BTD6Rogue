@@ -45,8 +45,10 @@ internal static class InGame_RoundEnd {
 			bossUi.Hide();
 		}
 
-		// Tower choice every 10 rounds (starting at 5)
-		if ((round + 1 - 5) >= 0 && (round + 1 - 5) % 10 == 0) {
+        //TODO: readd the prism choices here
+
+        // Tower choice every 10 rounds (starting at 5)
+        if ((round + 1 - 5) >= 0 && (round + 1 - 5) % 10 == 0) {
 			if (BTD6Rogue.rogueGame.rerolls < 3) { BTD6Rogue.rogueGame.rerolls++; }
 			BTD6Rogue.rogueGame.encounterManager.AddEncounter(ModContent.GetContent<GainTowerEncounter>()[0]);
 		}

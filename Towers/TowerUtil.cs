@@ -24,6 +24,11 @@ public static class TowerUtil {
                 BTD6Rogue.LogMessage("The RogueTower " + tower.Name + "'s BaseTowerId (" + tower.BaseTowerId + ") returns a null tower. It has been disabled.", tower, ErrorLevels.Debug);
                 continue;
             }
+            if (tower.GetBaseTower().cost < 0)
+            {
+                BTD6Rogue.LogMessage("The RogueTower " + tower.Name + "'s BaseTowerId (" + tower.BaseTowerId + ") returns a tower with a negative cost. It has been disabled.", tower, ErrorLevels.Debug);
+                continue;
+            }
             if (tower.GetBaseTower().towerSet == Il2CppAssets.Scripts.Models.TowerSets.TowerSet.Hero)
             {
                 BTD6Rogue.LogMessage("The RogueTower " + tower.Name + "'s BaseTowerId (" + tower.BaseTowerId + ") returns a tower in the Hero TowerSet. This may cause issues.", tower, ErrorLevels.Debug);
@@ -58,31 +63,55 @@ public static class TowerUtil {
 		return towerChoices.ToArray();
 	}
 
-    public static TowerChoice CreateTowerChoiceData(RogueTower tower, int[] tiers) {
-		TowerModel towerModel = tower.GetTower(tiers);
+    public static TowerChoice? CreateTowerChoiceData(RogueTower tower, int[] tiers) {
+        TowerModel towerModel = tower.GetTower(tiers);
 		int path = Array.IndexOf(tiers, tiers.Max());
 
-		string towerName = tower.GetTower(tiers).GetBaseId();
+        //if (tower is RoguePowerProTower) { tiers = [tiers[0] - 2, tiers[1] - 2, tiers[2] - 2]; }
+
+        string towerName = tower.GetTower(tiers).GetBaseId();
 		if (tiers[path] > 0) {
-			towerName = towerModel.GetUpgrade(path, tiers[path]).name;
+			try {
+                towerName = towerModel.GetUpgrade(path, tiers[path]).name;
+            }
+			catch {
+				BTD6Rogue.LogMessage("The tier " + tiers[path] + " UPGRADE for the " + path + "th path for the '" + towerName + "'tower is null.", "TowerUtil.CreateTowerChoiceData", ErrorLevels.Error);
+				towerName += "(Path " + (1 + path) + ")";
+            }
 		}
 		return new TowerChoice(tower.BaseTowerId, towerName, tower.GetTowerAmount(tiers), tiers, tower, tower.GetTower(tiers).portrait, tower.GetTower(tiers));
 	}
 
-	public static TowerChoice[] CreateTowerChoiceDatas(RogueTower tower, int tier) {
-		List<TowerChoice> towerChoices = new List<TowerChoice>();
+	public static TowerChoice[] CreateTowerChoiceDatas(RogueTower tower, int tier) { 
+        List<TowerChoice> towerChoices = new List<TowerChoice>();
+
+        if (tower is RoguePowerProTower) { tier -= 2; }
+
+        TowerModel path2Tower = tower.GetTower([0, tier, 0]);
+
+        if (path2Tower.GetUpgrade(1, tier) is null) {
+            towerChoices.Add(CreateTowerChoiceData(tower, [0, 0, 0]));
+            return towerChoices.ToArray();
+        }
 
 		TowerModel path1Tower = tower.GetTower([tier, 0, 0]);
-		TowerModel path2Tower = tower.GetTower([0, tier, 0]);
 		TowerModel path3Tower = tower.GetTower([0, 0, tier]);
 
 		string path1Name = path1Tower.GetBaseId();
 		string path2Name = path2Tower.GetBaseId();
 		string path3Name = path3Tower.GetBaseId();
-		if (tier > 0) {
+
+		if (tier > 0)
+		{
 			path1Name = path1Tower.GetUpgrade(0, tier).name;
 			path2Name = path2Tower.GetUpgrade(1, tier).name;
 			path3Name = path3Tower.GetUpgrade(2, tier).name;
+		}
+		else if (tower is RoguePowerProTower)
+		{
+			path1Name += " (Path 1)";
+			path2Name += " (Path 2)";
+			path3Name += " (Path 3)";
 		}
 
 		towerChoices.Add(new TowerChoice(tower.BaseTowerId, path1Name, tower.GetTowerAmount([tier, 0, 0]), [tier, 0, 0], tower, path1Tower.portrait, path1Tower));
@@ -118,7 +147,8 @@ public static class TowerUtil {
 
 	public static TowerData CreateDataFromChoice(TowerChoice choiceData) {
 		int[] towerPaths = [Math.Max(choiceData.towerPaths[0], 2), Math.Max(choiceData.towerPaths[1], 2), Math.Max(choiceData.towerPaths[2], 2)];
-		TowerData towerData = new TowerData(choiceData.towerId, towerPaths, count: choiceData.towerAmount);
+		if (choiceData.rogueTower is RoguePowerProTower) towerPaths = [Math.Max(choiceData.towerPaths[0], 0), Math.Max(choiceData.towerPaths[1], 0), Math.Max(choiceData.towerPaths[2], 0)];
+        TowerData towerData = new TowerData(choiceData.towerId, towerPaths, count: choiceData.towerAmount);
 		return towerData;
 	}
 
@@ -132,9 +162,9 @@ public static class TowerUtil {
 		foreach (RogueTower rogueTower in rogueTowers) {
 			if (playerTowers.ContainsKey(rogueTower.BaseTowerId)) {
 				if (playerTowers[rogueTower.BaseTowerId].locked) { continue; }
-				if (!playerTowers[rogueTower.BaseTowerId].limitPaths[0]) { towerChoices.Add(CreateTowerChoiceData(rogueTower, [tier, 0, 0])); }
-				if (!playerTowers[rogueTower.BaseTowerId].limitPaths[1]) { towerChoices.Add(CreateTowerChoiceData(rogueTower, [0, tier, 0])); }
-				if (!playerTowers[rogueTower.BaseTowerId].limitPaths[2]) { towerChoices.Add(CreateTowerChoiceData(rogueTower, [0, 0, tier])); }
+                if (!playerTowers[rogueTower.BaseTowerId].limitPaths[0] && CreateTowerChoiceData(rogueTower, [tier, 0, 0]) is not null) { towerChoices.Add(CreateTowerChoiceData(rogueTower, [tier, 0, 0])); }
+				if (!playerTowers[rogueTower.BaseTowerId].limitPaths[1] && CreateTowerChoiceData(rogueTower, [0, tier, 0]) is not null) { towerChoices.Add(CreateTowerChoiceData(rogueTower, [0, tier, 0])); }
+				if (!playerTowers[rogueTower.BaseTowerId].limitPaths[2] && CreateTowerChoiceData(rogueTower, [0, 0, tier]) is not null) { towerChoices.Add(CreateTowerChoiceData(rogueTower, [0, 0, tier])); }
 			} else {
 				towerChoices.AddRange(CreateTowerChoiceDatas(rogueTower, tier));
 			}

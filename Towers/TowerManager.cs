@@ -27,7 +27,10 @@ public class TowerManager(InGame game) {
 		TowerInventory towerInventory = game.GetTowerInventory();
 		Dictionary<string, int> towerMaxes = towerInventory.GetTowerInventoryMaxes();
 
-		foreach (string tower in TowerType.towers) {
+		foreach (string tower in TowerType.towers)
+        {
+            if ((tower.Contains("PowersInShop") && RogueModSettings.AllowPowersInShop != RogueModSettings.AllowPowersEnum.Unlimited && !ModifierUtil.HasModifier<NoPowersModifier>()) && !tower.Contains("Pro")) continue;
+            if ((tower == "PowersInShop-BananaFarmer" || tower == "PowersInShop-TechBot") && (RogueModSettings.AllowPowersInShop == RogueModSettings.AllowPowersEnum.Standard) && !ModifierUtil.HasModifier<NoPowersModifier>()) continue;
 			if (towerMaxes.ContainsKey(tower)) {
 				towerMaxes[tower] = 0;
 			} else {

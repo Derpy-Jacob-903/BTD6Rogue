@@ -73,5 +73,7 @@ public abstract class RogueTower : NamedModContent {
         }
     }
 
+    public virtual int GetTowerAmountForChoice() { return 1; }
+
     public override void Register() {}
 }

@@ -39,6 +39,7 @@
       <Compile Remove="Interface\Panels\InitialHeroChoicePanel.cs" />
       <Compile Remove="Modifier\Modifiers\OForceFortifiedModifier.cs" />
       <Compile Remove="Modifier\Modifiers\OForceLeadModifier.cs" />
+      <Compile Remove="Modifier\Modifiers\OPrismaticShard.cs" />
       <Compile Remove="Patch\HeroAddXpPatch.cs" />
       <Compile Remove="Patch\InGame\OnMatchStartPatch.cs" />
       <Compile Remove="Patch\InGame\OnRestartPatch.cs" />
@@ -53,7 +54,13 @@
       <Compile Remove="Patch\OnUpdatePatch.cs" />
       <Compile Remove="Round\RoundConfig.cs" />
       <Compile Remove="Round\RoundGenerator.cs" />
-      <Compile Remove="Tower\TowerConfig.cs" />
+      <Compile Remove="Towers\Modded\Powers\CamoTrap.cs" />
+      <Compile Remove="Towers\Modded\Powers\CaveMonkey.cs" />
+      <Compile Remove="Towers\Modded\Powers\GlueTrap.cs" />
+      <Compile Remove="Towers\Modded\Powers\MonkeyBoost.cs" />
+      <Compile Remove="Towers\Modded\Powers\RoadSpikes.cs" />
+      <Compile Remove="Towers\Paragons\ModdedParagons\CaveMonkeyParagon.cs" />
+      <Compile Remove="Towers\TowerConfig.cs" />
     </ItemGroup>
 
     <ItemGroup>
@@ -67,6 +74,13 @@
       <None Include="BTD6Rogue.sln" />
       <None Include="Modifier\Modifiers\OForceFortifiedModifier.cs" />
       <None Include="Modifier\Modifiers\OForceLeadModifier.cs" />
-      <None Include="Tower\Modded\TempleBase.cs" />
+      <None Include="Modifier\Modifiers\OPrismaticShard.cs" />
+      <None Include="Towers\Modded\Powers\CamoTrap.cs" />
+      <None Include="Towers\Modded\Powers\CaveMonkey.cs" />
+      <None Include="Towers\Modded\Powers\GlueTrap.cs" />
+      <None Include="Towers\Modded\Powers\MonkeyBoost.cs" />
+      <None Include="Towers\Modded\Powers\RoadSpikes.cs" />
+      <None Include="Towers\Modded\TempleBase.cs" />
+      <None Include="Towers\Paragons\ModdedParagons\CaveMonkeyParagon.cs" />
     </ItemGroup>
 </Project>

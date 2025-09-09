@@ -14,7 +14,7 @@ internal static class UpgradeObject_UpdateVisuals {
         var maxTierRestricted = __instance.CheckRestrictedPath();
         __instance.SetTier(__instance.tier, maxTier, maxTierRestricted);
         __instance.currentUpgrade.UpdateVisuals();
-        __instance.upgradeButton.UpdateVisuals(path, upgradeClicked);
+        __instance.upgradeButton.UpdateVisuals(path, __instance.tier, upgradeClicked);
         return false;
     }
 }
