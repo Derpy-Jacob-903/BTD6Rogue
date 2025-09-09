@@ -75,7 +75,7 @@ public static class TowerUtil {
                 towerName = towerModel.GetUpgrade(path, tiers[path]).name;
             }
 			catch {
-				BTD6Rogue.LogMessage("The tier " + tiers[path] + " UPGRADE for the " + path + "th path for the '" + towerName + "'tower is null.", "TowerUtil.CreateTowerChoiceData", ErrorLevels.Error);
+				BTD6Rogue.LogMessage("The tier " + tiers[path] + " UPGRADE for the " + (1 + path) + "th path for the '" + towerName + "' tower is null.", "TowerUtil.CreateTowerChoiceData", ErrorLevels.Error);
 				towerName += "(Path " + (1 + path) + ")";
             }
 		}
@@ -85,7 +85,7 @@ public static class TowerUtil {
 	public static TowerChoice[] CreateTowerChoiceDatas(RogueTower tower, int tier) { 
         List<TowerChoice> towerChoices = new List<TowerChoice>();
 
-        if (tower is RoguePowerProTower) { tier -= 2; }
+        if (tower is RoguePowerProTower) { tier -= 2; if (tier > 3) { tier = 3; } }
 
         TowerModel path2Tower = tower.GetTower([0, tier, 0]);
 
