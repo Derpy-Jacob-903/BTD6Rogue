@@ -9,7 +9,8 @@ public static class MapUtil {
 
 		RogueMap[] orderedMapList = [
 			ModContent.GetContent<MonkeyMeadow>()[0],
-			ModContent.GetContent<InTheLoop>()[0],
+            ModContent.GetContent<ThreeMinesAround>()[0],
+            ModContent.GetContent<InTheLoop>()[0],
 			ModContent.GetContent<MiddleOfTheRoad>()[0],
             ModContent.GetContent<SpaPits>()[0],
             ModContent.GetContent<Tinkerton>()[0],
