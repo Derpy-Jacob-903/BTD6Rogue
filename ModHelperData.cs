@@ -1,8 +1,8 @@
 namespace BTD6Rogue;
 
 public static class ModHelperData {
-    public const string WorksOnVersion = "49.0";
-    public const string Version = "3.2.0"; //tbh this update should have been 3.1.0, idk why bumped the number for v46
+    public const string WorksOnVersion = "51.1";
+    public const string Version = "3.2.2"; //tbh this update should have been 3.1.2, idk why bumped the number for v46
     public const string Name = "BTD6Rogue";
     public const string Description =
         "Turn BTD6 into a Roguelike!" +
@@ -29,6 +29,7 @@ public static class ModHelperData {
 		"\nDiscalimer:" +
 		"\nThis mod mses around with A LOT of core features meaning" +
         "\nThere are 0 guarantees on not getting flagged when playing with this mod!";
-    public const string RepoOwner = "mend-dev";
+    public const string RepoOwner = "Derpy-Jacob-903";
+    public const string Author = "mend-dev, Derpy-Jacob-903";
     public const string RepoName = "BTD6Rogue";
 }
