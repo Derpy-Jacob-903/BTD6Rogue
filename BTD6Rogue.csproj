@@ -54,12 +54,16 @@
       <Compile Remove="Patch\OnUpdatePatch.cs" />
       <Compile Remove="Round\RoundConfig.cs" />
       <Compile Remove="Round\RoundGenerator.cs" />
+      <Compile Remove="Towers\Modded\CyberMonkey.cs" />
       <Compile Remove="Towers\Modded\Powers\CamoTrap.cs" />
       <Compile Remove="Towers\Modded\Powers\CaveMonkey.cs" />
       <Compile Remove="Towers\Modded\Powers\GlueTrap.cs" />
       <Compile Remove="Towers\Modded\Powers\MonkeyBoost.cs" />
       <Compile Remove="Towers\Modded\Powers\RoadSpikes.cs" />
       <Compile Remove="Towers\Paragons\ModdedParagons\CaveMonkeyParagon.cs" />
+      <Compile Remove="Towers\Paragons\ModdedParagons\CyberMonkey.cs" />
+      <Compile Remove="Towers\Paragons\ModdedParagons\MonkeyOfLight.cs" />
+      <Compile Remove="Towers\Paragons\ModdedParagons\PlasmaMonkey.cs" />
       <Compile Remove="Towers\TowerConfig.cs" />
     </ItemGroup>
 
@@ -75,6 +79,7 @@
       <None Include="Modifier\Modifiers\OForceFortifiedModifier.cs" />
       <None Include="Modifier\Modifiers\OForceLeadModifier.cs" />
       <None Include="Modifier\Modifiers\OPrismaticShard.cs" />
+      <EmbeddedResource Include="Towers\Modded\CyberMonkey.cs" />
       <None Include="Towers\Modded\Powers\CamoTrap.cs" />
       <None Include="Towers\Modded\Powers\CaveMonkey.cs" />
       <None Include="Towers\Modded\Powers\GlueTrap.cs" />
@@ -82,5 +87,8 @@
       <None Include="Towers\Modded\Powers\RoadSpikes.cs" />
       <None Include="Towers\Modded\TempleBase.cs" />
       <None Include="Towers\Paragons\ModdedParagons\CaveMonkeyParagon.cs" />
+      <EmbeddedResource Include="Towers\Paragons\ModdedParagons\CyberMonkey.cs" />
+      <EmbeddedResource Include="Towers\Paragons\ModdedParagons\MonkeyOfLight.cs" />
+      <EmbeddedResource Include="Towers\Paragons\ModdedParagons\PlasmaMonkey.cs" />
     </ItemGroup>
 </Project>

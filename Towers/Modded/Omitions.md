@@ -21,10 +21,10 @@ Powers in Shop (All Towers): No upgrades.
 
 // I think these could work as `HeroSelect` exclusive "heros".
 
-Augmenter: No upgrades. 
+Augmenter: No standard upgrades. 
 
-Ancient Monkey: No upgrades. 
+Ancient Monkey: No standard upgrades. 
 
-Enhancement Monkey: No upgrades. 
+Enhancement Monkey: No standard upgrades. 
 
-Time Soldier: No upgrades. 
+Time Soldier: No standard upgrades. 
