@@ -1,8 +1,8 @@
 namespace BTD6Rogue;
 
 public static class ModHelperData {
-    public const string WorksOnVersion = "51.2";
-    public const string Version = "3.2.3"; //tbh this update should have been 3.1.2, idk why bumped the number for v46
+    public const string WorksOnVersion = "52.0";
+    public const string Version = "3.2.4"; //tbh this update should have been 3.1.2, idk why bumped the number for v46
     public const string Name = "BTD6Rogue";
     public const string Description =
         "Turn BTD6 into a Roguelike!" +
@@ -25,6 +25,7 @@ public static class ModHelperData {
 		"\n" +
 		"\nFor support I recommend joining the Menddev Discord Server as that is where I am most active" +
 		"\nContent Creators feel free to use this mod in any and all content, credit is appreciated but not required" +
+
 		"\n " +
 		"\nDiscalimer:" +
 		"\nThis mod mses around with A LOT of core features meaning" +
