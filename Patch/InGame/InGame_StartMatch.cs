@@ -5,16 +5,26 @@ using Il2CppAssets.Scripts.Simulation.Track;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame.Races;
 using Il2CppNinjaKiwi.Common;
+using Il2CppSystem.Collections;
 using UnityEngine;
 
 namespace BTD6Rogue;
 
 [HarmonyPatch(typeof(InGame), nameof(InGame.StartMatch))]
-internal static class InGame_StartMatch {
+internal static class InGame_StartMatch
+{
 
 	[HarmonyPostfix]
-	private static void Postfix(InGame __instance, MapSaveDataModel mapSaveData, bool wasSaveOverwritten) {
+	private static void Postfix(InGame __instance, MapSaveDataModel mapSaveData, bool wasSaveOverwritten)
+	{
 		if (BTD6Rogue.rogueGame == null) { return; }
+
+        IEnumerator enumer = __instance.InstantiateUiObject(__instance.inGameMenuDefs[15]);
+        enumer.MoveNext();
+		enumer.MoveNext();
+
+
+
 		__instance.bridge.simulation.bossSpawnRounds = new int[] { 19, 39, 59, 79, 99, 119, 139, 159, 179, 199, 219, 239, 259, 279, 299 };
 		__instance.bridge.simulation.model.bossBloonType = "Bloonarius";
 		__instance.bridge.simulation.model.bossEliteMode = false;
@@ -22,15 +32,18 @@ internal static class InGame_StartMatch {
 		__instance.bridge.simulation.map.spawner.bossBloonManager = bbm;
 		bbm.Init(__instance.bridge.simulation);
 
-		Transform transform = __instance.GetInGameUI().transform.FindChildWithName("BossUi(Clone)");
-		BossUI bossUi = transform.GetComponent<BossUI>();
-		bossUi.Hide();
+		/*Transform transform = __instance.GetInGameUI().transform.FindChildWithName("BossUi(Clone)");
+        BossUI bossUi = transform.GetComponent<BossUI>();
+        bossUi.Hide();*/
 
-		BTD6Rogue.rogueGame.gameData.gameState = GameState.Loaded;
-		if (mapSaveData != null) {
+        BTD6Rogue.rogueGame.gameData.gameState = GameState.Loaded;
+		if (mapSaveData != null)
+		{
 			BTD6Rogue.rogueGame.GameLoaded(__instance);
-		} else {
+		}
+		else
+		{
 			BTD6Rogue.rogueGame.GameStarted(__instance);
 		}
-    }
+	}
 }
