@@ -10,7 +10,7 @@ using System.Threading;
 namespace BTD6Rogue;
 
 public class RoundManager(InGame game) {
-	private InGame game = game;
+	private InGame? game = game;
 
 	public List<string> bossBag = new List<string>();
 	public string nextBoss = "";
@@ -39,29 +39,42 @@ public class RoundManager(InGame game) {
         Thread? thread = BTD6Rogue.rogueGame.roundManager.cashlessThread;
         if (thread != null && thread.IsAlive)
         {
-            BTD6Rogue.rogueGame.roundManager.activeBoss = false;
-			if (!thread.Join(5000)) { BTD6Rogue.LogMessage("cashlessThread did not shut down in time. It may cause a crash next time a boss spawns.", "RoundManager.KillCashlessBloonsThread", ErrorLevels.Critical); }
+	        BTD6Rogue.rogueGame.roundManager = new RoundManager(null);
+            //BTD6Rogue.rogueGame.roundManager.activeBoss = false;
+			//if (!thread.Join(5000)) { BTD6Rogue.LogMessage("cashlessThread did not shut down in time. It may cause a crash next time a boss spawns.", "RoundManager.KillCashlessBloonsThread", ErrorLevels.Critical); }
         }
         //BTD6Rogue.rogueGame.roundManager.cashlessThread = null;
     }
 
     public void TrySpawnCashlessBloons() {
-		while (activeBoss)
+		while (activeBoss )
         {
             //game = InGame.instance;
             Thread.Sleep(previousSpawn);
             ///I FUCKING HATE THIS BUG HHHH
             //if (!IsBridgeSafe()) { break; } //this just causes more proplums
-            //if (!IsBridgeSafe()) { game = InGame.instance; } //this just causes more proplums
-            /*if (!IsBridgeSafe()) //TODO: dispose of RoundManager when we restart the run 
+            /*if (!IsBridgeSafe()) { game = InGame.instance; } //this just causes more proplums
+            if (!IsBridgeSafe()) //TODO: dispose of RoundManager when we restart the run 
             {
-                BTD6Rogue.LogMessage("TrySpawnCashlessBloons Thread is using a stale InGame instance. It WILL cause a crash next time a boss spawns.", "RoundManager.TrySpawnCashlessBloons", ErrorLevels.Critical);
-                throw new AccessViolationException("TrySpawnCashlessBloons Thread is using a stale InGame instance. It WILL cause a FATAL AccessViolationException next time a boss spawns.");
-                //break;
+	            BTD6Rogue.LogMessage(
+		            "TrySpawnCashlessBloons Thread is using a stale InGame instance. It WILL cause a crash next time a boss spawns.",
+		            "RoundManager.TrySpawnCashlessBloons", ErrorLevels.Critical);
+	            //throw new AccessViolationException("TrySpawnCashlessBloons Thread is using a stale InGame instance. It WILL cause a FATAL AccessViolationException next time a boss spawns.");
+	            break;
             }*/
-            if (!activeBoss) { break; } // check if active boss got changed during Thread.Sleep
-            if (game == null || game.bridge == null) { break; }
-            if (BTD6Rogue.rogueGame == null) { break; }
+            if (!activeBoss) break;
+            var currentGame = InGame.instance;
+            if (currentGame == null || currentGame.bridge == null) break;
+            game = currentGame;
+            if (!IsBridgeSafe())
+            {
+	            BTD6Rogue.LogMessage(
+		            "TrySpawnCashlessBloons Thread is using a stale InGame instance. Exiting thread to avoid a crash.",
+		            "RoundManager.TrySpawnCashlessBloons",
+		            ErrorLevels.Critical
+	            );
+	            break;
+            }
             int round = game.bridge.GetCurrentRound();
             int groupRbe = GetRoundRbe(round) / 15;
 			RogueDifficulty difficulty = BTD6Rogue.rogueGame.difficulty;
@@ -97,7 +110,6 @@ public class RoundManager(InGame game) {
             return false;
         }
     }
-
 
     public void BossDefeated() {
 		activeBoss = false;

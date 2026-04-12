@@ -10,8 +10,9 @@ namespace BTD6Rogue;
 // To Do: allow for custom modifiers instead of just vanilla stuff
 public abstract class RogueBloon : NamedModContent {
 	public abstract string BaseBloonId { get; } // Base ID of the bloon (only need the Base Bloon, modifiers are handled inside class)
-    public virtual string? MasteryBloonId { get; } // Base ID of the bloon in mastery mode.
+	public virtual string? MasteryBloonId { get; } // Base ID of the bloon in mastery mode.
 	public virtual int MasteryMult => 1; //
+	public virtual bool CanSpawn => true; //
 
     public virtual int StartRound => -1; // The lowest round number where this bloon can spawn
 	public virtual int EndRound => -1; // The highest round number where this bloon can spawn

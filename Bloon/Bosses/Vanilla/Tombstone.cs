@@ -7,7 +7,7 @@ using Il2CppAssets.Scripts.Simulation.Bloons.Behaviors;
 
 namespace BTD6Rogue;
 
-public class MiniLychBloon : RogueBoss {
+public class TombstoneBloon : RogueBoss {
 	public override string BossName => "MiniLych";
 	public override bool IsBoss => false;
 

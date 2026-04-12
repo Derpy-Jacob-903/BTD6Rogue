@@ -2,7 +2,7 @@ namespace BTD6Rogue;
 
 public static class ModHelperData {
     public const string WorksOnVersion = "52.0";
-    public const string Version = "3.2.4"; //tbh this update should have been 3.1.2, idk why bumped the number for v46
+    public const string Version = "3.2.7"; //tbh this update should have been 3.1.2, idk why bumped the number for v46
     public const string Name = "BTD6Rogue";
     public const string Description =
         "Turn BTD6 into a Roguelike!" +
@@ -19,7 +19,7 @@ public static class ModHelperData {
 		"\n - 5 Custom Difficulties that each scale the strength bosses and bloons and the cost of towers and upgrades" +
 		"\n - All 6 vanilla bosses rebalanced with auto-scaling in freeplay" +
 		"\n - Randomly generated rounds using an RBE equation based off the vanilla rounds" +
-		"\n - 16 modifiers to make games more difficult including all of CHIMPS and Tower Set restrictions" +
+		"\n - 17 modifiers to make games more difficult including all of CHIMPS and Tower Set restrictions" +
 		"\n - Custom save files to allow for Saving and Loading BTD6Rogue games and a viewable game history" +
 		"\n - And probably more things that I haven't listed!" +
 		"\n" +

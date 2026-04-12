@@ -34,6 +34,7 @@ public static class MapUtil {
 			ModContent.GetContent<EndOfTheRoad>()[0],
 			ModContent.GetContent<Logs>()[0],
 
+			ModContent.GetContent<LostCrevasse>()[0],
             ModContent.GetContent<LuminousCove>()[0],
 			ModContent.GetContent<SulfurSprings>()[0],
 			ModContent.GetContent<WaterPark>()[0],
@@ -58,6 +59,9 @@ public static class MapUtil {
 			ModContent.GetContent<Rake>()[0],
 			ModContent.GetContent<SpiceIslands>()[0],
 
+			ModContent.GetContent<MushroomGrotto>()[0],
+			ModContent.GetContent<PartyParade>()[0],
+			ModContent.GetContent<SunsetGulch>()[0],
             ModContent.GetContent<EnchantedGlade>()[0],
             ModContent.GetContent<LastResort>()[0],
             ModContent.GetContent<AncientPortal>()[0],
@@ -79,6 +83,7 @@ public static class MapUtil {
 			ModContent.GetContent<Cornfield>()[0],
 			ModContent.GetContent<Underground>()[0],
 
+			ModContent.GetContent<TrickyTracks>()[0],
 			ModContent.GetContent<GlacialTrail>()[0],
 			ModContent.GetContent<DarkDungeons>()[0],
 			ModContent.GetContent<Sanctuary>()[0],

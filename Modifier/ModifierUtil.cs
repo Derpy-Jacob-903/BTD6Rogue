@@ -36,6 +36,7 @@ public static class ModifierUtil {
 			modifier.RemoveRogueModifier(model);
 		}
 	}
+
     public static bool HasModifier<T>() where T : RogueModifier =>
     BTD6Rogue.rogueGame.modifiers.Any(m => m is T);
 }

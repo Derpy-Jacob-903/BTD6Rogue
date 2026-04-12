@@ -4,9 +4,9 @@ using Il2CppAssets.Scripts.Models.Gameplay.Mods;
 
 namespace BTD6Rogue;
 
-public class OScatterbrainModifier : RogueModifier {
-	public override string DisplayName => "Monkey\nShortage";
-	public override string Description => "Gain one less Monkey from Tower and Paragon Choices"; //"Gain one less Monkey from Tower and Paragon Choices"
+public class OAZFrontierModifier : RogueModifier {
+	public override string DisplayName => "Frontier Bloons";
+	public override string Description => "Allows Frontier Legends exclusive Bloons to spawn.\nNote: Diamondback may spawn Diamond Bloons regardless of this option.";
     public override string Image => GetSpriteReference("ClassicModeImage").ToString();
 
 	public override void ApplyRogueModifier(ModModel model) {}

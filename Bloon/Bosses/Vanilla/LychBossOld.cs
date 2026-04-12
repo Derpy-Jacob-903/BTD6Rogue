@@ -7,11 +7,12 @@ using Il2CppAssets.Scripts.Simulation.Bloons.Behaviors;
 using BTD_Mod_Helper.Api.Enums;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using BloonType = BTD_Mod_Helper.Api.Enums.BloonType;
+using System;
 
 namespace BTD6Rogue;
 
-
-public class LychBoss : RogueBoss {
+[Obsolete("as of v54.0, this is outdated and will break")]
+public class LychBossOld : RogueBoss {
 	public override string BossName => "Lych";
 
 	public static readonly float baseMaxHealth = 4000;
@@ -65,8 +66,8 @@ public class LychBoss : RogueBoss {
 
 		foreach (AbsorbTowerBuffsAction behavior in bloon.GetBloonBehaviors<AbsorbTowerBuffsAction>()) {
 			AbsorbTowerBuffsActionModel model = behavior.absorbTowerBuffsActionModel;
-			//model.healPerBuff = Mathf.FloorToInt((baseHealPerBuff + levelHealPerBuff * tier));
-			//model.healPercentPerBuff = (baseHealPercentPerBuff + levelHealPercentPerBuff * tier);
+			model.healPerBuff = Mathf.FloorToInt((baseHealPerBuff + levelHealPerBuff * tier));
+			model.healPercentPerBuff = (baseHealPercentPerBuff + levelHealPercentPerBuff * tier);
 			model.radius = (baseAbsorbBuffRadius + levelAbsorbBuffRadius * tier);
 			model.towerFreezeDuration = (baseTowerFreezeDuration + levelTowerFreezeDuration * tier);
 		}

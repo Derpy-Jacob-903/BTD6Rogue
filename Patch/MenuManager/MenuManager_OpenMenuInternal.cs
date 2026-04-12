@@ -19,13 +19,14 @@ static class MenuManager_OpenMenuInternal {
 	[HarmonyPrefix]
 	static void Prefix(BTDMenuManager._OpenMenuInternal_d__66 __instance) {
 		bool isModdedMenu = false;
-		ModMenuData mmd = null!;
+		ModMenuData? mmd = null;
 		if (__instance.menuData != null) {
 			if (__instance.menuData.TryCast<ModMenuData>() != null) {
 				mmd = __instance.menuData.Cast<ModMenuData>();
 				isModdedMenu = true;
 			}
 		}
+		if (mmd == null) { return; }
 		if (__instance.__1__state == 0 && isModdedMenu) {
 			__instance.__1__state = 1;
 			__instance.__8__1 = new BTDMenuManager.__c__DisplayClass66_0();
@@ -46,13 +47,14 @@ static class MenuManager_OpenMenuInternal {
 	[HarmonyPostfix]
 	static void Postfix(BTDMenuManager._OpenMenuInternal_d__66 __instance) {
 		bool isModdedMenu = false;
-		ModMenuData mmd = null!;
+		ModMenuData? mmd = null;
 		if (__instance.menuData != null) {
 			if (__instance.menuData.TryCast<ModMenuData>() != null) {
 				mmd = __instance.menuData.Cast<ModMenuData>();
 				isModdedMenu = true;
 			}
 		}
+		if (mmd == null) { return; }
 		if (__instance.__1__state == -1 && isModdedMenu) {
 			string oldName = __instance.menuName;
 			__instance.menuName = __instance.menuName + "-ModdedMenu" + mmd.id;

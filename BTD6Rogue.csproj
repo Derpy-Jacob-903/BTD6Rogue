@@ -34,6 +34,12 @@
 	<Import Project="..\btd6.targets" />
 
     <ItemGroup>
+      <Compile Remove="Bloon\Bosses\Vanilla\DiamondbackBoss.cs" />
+      <Compile Remove="Bloon\Bosses\Vanilla\LychBoss.cs" />
+      <Compile Remove="Bloon\Bosses\Vanilla\LychBossOld.cs" />
+      <Compile Remove="Bloon\Bosses\Vanilla\LychMini.cs" />
+      <Compile Remove="Bloon\Bosses\Vanilla\MiniLychBloonOld.cs" />
+      <Compile Remove="Bloon\Bosses\Vanilla\Tombstone.cs" />
       <Compile Remove="Gamemode\Gamemodes\BlitzMode.cs" />
       <Compile Remove="Interface\Panels\ArtifactChoicePanel.cs" />
       <Compile Remove="Interface\Panels\InitialHeroChoicePanel.cs" />
@@ -75,6 +81,12 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Include="Bloon\Bosses\Vanilla\DiamondbackBoss.cs" />
+      <None Include="Bloon\Bosses\Vanilla\LychBoss.cs" />
+      <None Include="Bloon\Bosses\Vanilla\LychBossOld.cs" />
+      <None Include="Bloon\Bosses\Vanilla\Tombstone.cs" />
+      <None Include="Bloon\Bosses\Vanilla\LychMini.cs" />
+      <None Include="Bloon\Bosses\Vanilla\MiniLychBloonOld.cs" />
       <None Include="BTD6Rogue.sln" />
       <None Include="Modifier\Modifiers\OForceFortifiedModifier.cs" />
       <None Include="Modifier\Modifiers\OForceLeadModifier.cs" />

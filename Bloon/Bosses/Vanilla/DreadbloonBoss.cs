@@ -30,6 +30,9 @@ public class DreadbloonBoss : RogueBoss {
 	public static readonly float levelInitialSpawnSizeAddition = 5;
 	public static readonly float baseTimeBetweenSpawns = 10;
 	public static readonly float levelTimeBetweenSpawnsAddition = -1;
+	
+	
+	public static readonly float baseInitialSkulls = -1;
 
 	public override void AdjustBloonModel(BloonModel bloonModel, int tier, bool elite) {
 		bloonModel.maxHealth = Mathf.FloorToInt(baseMaxHealth * Mathf.Pow(levelHealthModifier, tier));

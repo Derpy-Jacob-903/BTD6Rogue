@@ -23,8 +23,6 @@ internal static class InGame_StartMatch
         enumer.MoveNext();
 		enumer.MoveNext();
 
-
-
 		__instance.bridge.simulation.bossSpawnRounds = new int[] { 19, 39, 59, 79, 99, 119, 139, 159, 179, 199, 219, 239, 259, 279, 299 };
 		__instance.bridge.simulation.model.bossBloonType = "Bloonarius";
 		__instance.bridge.simulation.model.bossEliteMode = false;
