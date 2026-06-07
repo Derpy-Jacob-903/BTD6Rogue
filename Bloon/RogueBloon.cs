@@ -10,7 +10,7 @@ namespace BTD6Rogue;
 // To Do: allow for custom modifiers instead of just vanilla stuff
 public abstract class RogueBloon : NamedModContent {
 	public abstract string BaseBloonId { get; } // Base ID of the bloon (only need the Base Bloon, modifiers are handled inside class)
-	public virtual string? MasteryBloonId { get; } // Base ID of the bloon in mastery mode.
+	public virtual string? MasteryBloonId => null; // Base ID of the bloon in mastery mode.
 	public virtual int MasteryMult => 1; //
 	public virtual bool CanSpawn => true; //
 
@@ -24,9 +24,9 @@ public abstract class RogueBloon : NamedModContent {
 	public virtual bool MoabClass => false;
     public virtual bool MoabClassMastery => false;
 
-    // Whether or not the modifier exists on the bloon
+    // Whether the modifier can exist on the bloon
     // Ditto but for the Mastery mode (null uses the normal value)
-    // Whether to always force the modifier on the bloon (ie. DDTs)
+    // Whether to always force the modifier on the bloon (i.e. DDTs)
     // The round it can start spawning it
     // The round it stops spawning it
 
@@ -90,5 +90,5 @@ public abstract class RogueBloon : NamedModContent {
 		return v;
 	}
 
-	public override sealed void Register() { } // Still no idea what this does
+	public sealed override void Register() { } // Still no idea what this does
 }

@@ -27,11 +27,16 @@ internal static class Spawner_Emit {
         }
     }
 
+    public static bool isLychToken(BloonModel bloonModel)
+    {
+        return bloonModel.baseId.Contains("Lych") || bloonModel.baseId.Contains("Tombstone"); // || bloonModel.baseId.Contains("Undead");
+    }
+
     [HarmonyPostfix]
     private static void Postfix(Spawner __instance, BloonModel bloonModel, int roundNumber, int emissionIndex, ref Bloon __result)
     {
         if (BTD6Rogue.rogueGame is null) { return; }
-        if (bloonModel.isBoss || bloonModel.baseId.Contains("Lych") || bloonModel.IsRock)
+        if (bloonModel.isBoss || isLychToken(bloonModel) || bloonModel.IsRock) //note: should this include Undead Moabs and Diamond Bloons?
         {
             RogueBoss boss = BossUtil.GetBossFromBloonId(bloonModel.baseId);
             boss.AdjustBloon(__result, roundNumber / 20, false);

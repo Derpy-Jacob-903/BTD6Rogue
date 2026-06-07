@@ -3,6 +3,7 @@
 public class CeramicBloon : RogueBloon {
     public override string BaseBloonId => "Ceramic";
     public override string MasteryBloonId => "Moab";
+    public override bool MoabClassMastery => true;
     public override int StartRound => 39;
     public override int EndRound => -1;
 

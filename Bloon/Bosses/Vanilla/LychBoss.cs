@@ -23,10 +23,6 @@ public class LychBoss : RogueBoss {
 	public static readonly float baseTimeInterval = 14f;
 	public static readonly float levelTimeIntervalAddition = -0.5f;
 
-	public static readonly float baseHealPerBuff = 0;
-	public static readonly float levelHealPerBuff = 0;
-	public static readonly float baseHealPercentPerBuff = 0.02f;
-	public static readonly float levelHealPercentPerBuff = 0;
 	public static readonly float baseAbsorbBuffRadius = 9999;
 	public static readonly float levelAbsorbBuffRadius = 0;
 	public static readonly float baseTowerFreezeDuration = 5;
@@ -70,21 +66,13 @@ public class LychBoss : RogueBoss {
 			model.radius = (baseAbsorbBuffRadius + levelAbsorbBuffRadius * tier);
 			model.towerFreezeDuration = (baseTowerFreezeDuration + levelTowerFreezeDuration * tier);
 		}
-
-		foreach (HealOnTowerSellAction behavior in bloon.GetBloonBehaviors<HealOnTowerSellAction>()) {
-			HealOnTowerSellActionModel model = behavior.healOnTowerSellActionModel;
-			model.healAmount = Mathf.FloorToInt((baseHealAmount + levelHealAmount * tier));
-			model.healPercentForHighestTier = (baseHealPercentTier + levelHealPercentTier *	tier);
-		}
-
-		foreach (ReanimateMoabsAction behavior in bloon.GetBloonBehaviors<ReanimateMoabsAction>()) {
-			ReanimateMoabsActionModel model = behavior.reanimateMoabsActionModel;
-			model.maxRbe = Mathf.FloorToInt((baseMaxRbe + levelMaxRbe * tier));
-			model.pauseMovementDuration = (basePauseMovementDuration + levelPauseMovementDuration * tier);
-			model.speedMultiplier = (baseReanimatedSpeedMultiplier + levelReanimatedSpeedMutliplier * tier);
-			model.healthMultiplier = (baseReanimatedHealthMultiplier + levelReanimatedHealthMultiplier * tier);
-			model.miniMeModelId = BloonType.MiniLych1;
-			model.timeUntilBloonsMove = (baseTimeUntilBloonsMove + levelTimeUntilBloonsMove * tier);
+		
+		foreach (LychBossSuperScriptModel behavior in bloon.GetBloonBehaviors<LychBossSuperScriptModel>()) {
+			LychBossSuperScriptModel model = behavior.absorbTowerBuffsActionModel;
+			//model.healPerBuff = Mathf.FloorToInt((baseHealPerBuff + levelHealPerBuff * tier));
+			//model.healPercentPerBuff = (baseHealPercentPerBuff + levelHealPercentPerBuff * tier);
+			model.radius = (baseAbsorbBuffRadius + levelAbsorbBuffRadius * tier);
+			model.towerFreezeDuration = (baseTowerFreezeDuration + levelTowerFreezeDuration * tier);
 		}
 
 		foreach (SetSpeedPercentAction behavior in bloon.GetBloonBehaviors<SetSpeedPercentAction>()) {

@@ -19,9 +19,7 @@ public class LychMini : RogueBoss {
 
 	public static readonly float baseTimeInterval = 15;
 	public static readonly float levelTimeIntervalAddition = -1;
-
-	public static readonly float baseDrainLives = 2;
-	public static readonly float levelDrainLives = 1;
+	
 
 	public override void AdjustBloonModel(BloonModel bloonModel, int tier, bool elite) {
 		bloonModel.maxHealth = Mathf.FloorToInt(baseMaxHealth * Mathf.Pow(levelHealthModifier, tier));

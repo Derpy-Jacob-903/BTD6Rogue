@@ -8,20 +8,37 @@ using Il2CppAssets.Scripts.Simulation.Bloons.Behaviors;
 namespace BTD6Rogue;
 
 public class TombstoneBloon : RogueBoss {
-	public override string BossName => "MiniLych";
+	public override string BossName => "Tombstone";
 	public override bool IsBoss => false;
 
 	public static readonly float baseMaxHealth = 500;
 	public static readonly float levelHealthModifier = 2;
 
-	public static readonly float baseSpeed = 2f;
-	public static readonly float levelSpeedIncrease = 1.5f;
-
-	public static readonly float baseTimeInterval = 15;
-	public static readonly float levelTimeIntervalAddition = -1;
-
-	public static readonly float baseDrainLives = 2;
-	public static readonly float levelDrainLives = 1;
+	
+	public static readonly List<string> firstSpawnBloons = new List<string>() {
+		BloonType.Undead,
+		BloonType.Zebra,
+		BloonType.Rainbow,
+		BloonType.Ceramic,
+		BloonType.Moab,
+		BloonType.Bfb
+	};
+	public static readonly List<string> secondSpawnBloons = new List<string>() {
+		BloonType.Yellow,
+		BloonType.Zebra,
+		BloonType.Rainbow,
+		BloonType.Ceramic,
+		BloonType.Moab,
+		BloonType.Bfb
+	};
+	public static readonly List<string> thirdSpawnBloons = new List<string>() {
+		BloonType.Yellow,
+		BloonType.Zebra,
+		BloonType.Rainbow,
+		BloonType.Ceramic,
+		BloonType.Moab,
+		BloonType.Bfb
+	};
 
 	public override void AdjustBloonModel(BloonModel bloonModel, int tier, bool elite) {
 		bloonModel.maxHealth = Mathf.FloorToInt(baseMaxHealth * Mathf.Pow(levelHealthModifier, tier));

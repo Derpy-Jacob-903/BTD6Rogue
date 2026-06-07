@@ -9,6 +9,7 @@ public static class MapUtil {
 
 		RogueMap[] orderedMapList = [
 			ModContent.GetContent<MonkeyMeadow>()[0],
+			ModContent.GetContent<SkullPeak>()[0],
             ModContent.GetContent<ThreeMinesAround>()[0],
             ModContent.GetContent<InTheLoop>()[0],
 			ModContent.GetContent<MiddleOfTheRoad>()[0],
@@ -97,7 +98,6 @@ public static class MapUtil {
 			ModContent.GetContent<MuddyPuddles>()[0],
 			ModContent.GetContent<Ouch>()[0],
 		];
-		
 		return orderedMapList;
 	}
 
