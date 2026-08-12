@@ -14,10 +14,10 @@ namespace BTD6Rogue;
 // Praise the patch for it allows menus OF THE SAME TYPE TO BE STACKED OVER EACHOTHER!!!
 // TODO: Menus of the same type overwrite eachother in the stack making it so if you press the back button, in this case, it sends the user back to the main menu rather than the previous menu
 // TODO: Delete Il2Cpp and obfuscation from existence
-[HarmonyPatch(typeof(BTDMenuManager._OpenMenuInternal_d__66), nameof(BTDMenuManager._OpenMenuInternal_d__66.MoveNext))]
+[HarmonyPatch(typeof(BTDMenuManager._OpenMenuInternal_d__70), nameof(BTDMenuManager._OpenMenuInternal_d__70.MoveNext))]
 static class MenuManager_OpenMenuInternal {
 	[HarmonyPrefix]
-	static void Prefix(BTDMenuManager._OpenMenuInternal_d__66 __instance) {
+	static void Prefix(BTDMenuManager._OpenMenuInternal_d__70 __instance) {
 		bool isModdedMenu = false;
 		ModMenuData? mmd = null;
 		if (__instance.menuData != null) {
@@ -29,23 +29,24 @@ static class MenuManager_OpenMenuInternal {
 		if (mmd == null) { return; }
 		if (__instance.__1__state == 0 && isModdedMenu) {
 			__instance.__1__state = 1;
-			__instance.__8__1 = new BTDMenuManager.__c__DisplayClass66_0();
+			__instance.__8__1 = new BTDMenuManager.__c__DisplayClass70_0();
 			__instance.__8__1.__4__this = __instance.__4__this;
 			__instance.__8__1.previousMenu = __instance.__4__this.currMenu;
 
 			Il2CppSystem.Collections.Generic.List<Il2CppSystem.ValueTuple<string, Object>> menuStack2 = __instance.__4__this.menuStack;
-			menuStack2.Add(new Il2CppSystem.ValueTuple<string, Object>(__instance.menuName, __instance.menuData));
+			if (__instance.menuData != null)
+				menuStack2.Add(new Il2CppSystem.ValueTuple<string, Object>(__instance.menuName, __instance.menuData));
 
 			Il2CppSystem.ValueTuple<string, GameMenu, BTDMenuManager.MenuStatus> newCurrMenu =
 				new(__instance.menuName, null!, BTDMenuManager.MenuStatus.loading);
 
 			__instance.__4__this.currMenu = newCurrMenu;
 
-            __instance.__8__1._OpenMenuInternal_b__0();
+            __instance.__8__1._OpenMenuInternal_b__1();
 		}
 	}
 	[HarmonyPostfix]
-	static void Postfix(BTDMenuManager._OpenMenuInternal_d__66 __instance) {
+	static void Postfix(BTDMenuManager._OpenMenuInternal_d__70 __instance) {
 		bool isModdedMenu = false;
 		ModMenuData? mmd = null;
 		if (__instance.menuData != null) {

@@ -2,6 +2,7 @@
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using MelonLoader;
 using UnityEngine;
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
 namespace BTD6Rogue;
 
@@ -11,7 +12,6 @@ namespace BTD6Rogue;
 
 [RegisterTypeInIl2Cpp()]
 public class RoguePanel : MonoBehaviour {
-
 	public InGame game;
 	public RectTransform rect;
 	public ModHelperPanel parent;
@@ -19,11 +19,11 @@ public class RoguePanel : MonoBehaviour {
 
 	protected bool active = false; // Keep track of when logic can be run in the panel, handle state in panel
 
-	public void SetupPanel(InGame game, RectTransform rect, ModHelperPanel parent, RogueEncounter encounter) {
-		this.game = game;
-		this.rect = rect;
-		this.parent = parent;
-		this.encounter = encounter;
+	public void SetupPanel(InGame _game, RectTransform _rect, ModHelperPanel _parent, RogueEncounter _encounter) {
+		this.game = _game;
+		this.rect = _rect;
+		this.parent = _parent;
+		this.encounter = _encounter;
 	}
 
 	public virtual void CreatePanel() {}

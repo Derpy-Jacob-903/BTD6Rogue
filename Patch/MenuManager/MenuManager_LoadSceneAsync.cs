@@ -9,10 +9,10 @@ using BTD_Mod_Helper.Extensions;
 
 namespace BTD6Rogue;
 
-[HarmonyPatch(typeof(BTDMenuManager._LoadSceneAsync_d__47), nameof(BTDMenuManager._LoadSceneAsync_d__47.MoveNext))]
+[HarmonyPatch(typeof(BTDMenuManager._LoadSceneAsync_d__48), nameof(BTDMenuManager._LoadSceneAsync_d__48.MoveNext))]
 static class MenuManager_LoadSceneAsync {
 	[HarmonyPrefix]
-	static void Prefix(BTDMenuManager._LoadSceneAsync_d__47 __instance, out string __state) {
+	static void Prefix(BTDMenuManager._LoadSceneAsync_d__48 __instance, out string __state) {
 		__state = __instance.sceneName;
 		if (__instance.__1__state == 0 && __instance.sceneName.Contains("ModdedMenu")) {
 			string oldName = __instance.sceneName.Split("-")[0];
@@ -23,7 +23,7 @@ static class MenuManager_LoadSceneAsync {
 	}
 
 	[HarmonyPostfix]
-	static void PostFix(BTDMenuManager._LoadSceneAsync_d__47 __instance, string __state) {
+	static void PostFix(BTDMenuManager._LoadSceneAsync_d__48 __instance, string __state) {
 		if (__instance.__1__state == -1 && __state.Contains("ModdedMenu")) {
 			Scene newScene = SceneManager.CreateScene(__state, new CreateSceneParameters());
 			Scene sceneFromName = SceneManager.GetSceneByName(__instance.sceneName);

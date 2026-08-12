@@ -25,12 +25,12 @@ public abstract class RogueTower : NamedModContent {
     // Used in other mechanics of BTD6Rogue
     public abstract Dictionary<string, TowerTag[]> TowerTags { get; }
 
-    // Going forward I want to make an "optional" dictionary that maps to all of the upgrade paths of a tower which can contain tags and ranges
+    // Going forward I want to make an "optional" dictionary that maps to all the upgrade paths of a tower which can contain tags and ranges
     // Optional as it should be able to automatically generate (both so I have less work and also to provide functionality for modded towers)
     public abstract Vector2Int[] TowerAmountRanges { get; }
 
     // Blacklists the RogueTower for Tower Choices/Selection
-    public virtual bool ChoiceBlacklisted => false;
+    public virtual bool ChoiceBlacklisted => GetBaseTower().IsTowerUnlocked() ?? false;
     public virtual bool SelectBlacklisted => false;
 
     // Removes a 

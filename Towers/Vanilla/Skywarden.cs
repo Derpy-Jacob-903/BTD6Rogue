@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace BTD6Rogue;
 
-public class Desperado : RogueTower {
-	public override string BaseTowerId => TowerType.Desperado;
+public class Skywarden : RogueTower {
+	public override string BaseTowerId => TowerType.Skywarden;
 
 	public override Dictionary<string, TowerTag[]> TowerTags => [];
 

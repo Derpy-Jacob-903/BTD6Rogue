@@ -1,8 +1,8 @@
 namespace BTD6Rogue;
 
 public static class ModHelperData {
-    public const string WorksOnVersion = "52.0";
-    public const string Version = "3.2.7"; //tbh this update should have been 3.1.2, idk why bumped the number for v46
+    public const string WorksOnVersion = "56.0";
+    public const string Version = "3.2.9"; //tbh this update should have been 3.1.2, idk why bumped the number for v46
     public const string Name = "BTD6Rogue";
     public const string Description =
         "Turn BTD6 into a Roguelike!" +

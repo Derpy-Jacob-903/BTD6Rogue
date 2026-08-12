@@ -18,7 +18,6 @@ namespace BTD6Rogue
         public static bool StaticSelectBlacklisted => ModifierUtil.HasModifier<NoPowersModifier>() || RogueModSettings.AllowPowersInShop == RogueModSettings.AllowPowersEnum.None;
 
         // Get the RogueTower's TowerModel at a path and tier of that path
-        // TODO: make it so it can get crosspaths, additionally combine functionality with getbasetower
         public override TowerModel GetTower(int[] tiers)
         {
             return Game.instance.model.GetTowerModel(BaseTowerId, 0, 0, 0);

@@ -45,7 +45,11 @@ public static class BossUtil {
 		};
 
         List<string> BlastapopoulosHints = new List<string>() {
-            "It's kinda hot"
+            "It's kinda hot..."
+        };
+        
+        List<string> DiamondbackHints = new List<string>() {
+	        "Real sandy right now..."
         };
 
         switch (boss) {
@@ -60,7 +64,9 @@ public static class BossUtil {
 			case "RoguePhayze":
 				return PhayzeHints[new Random().Next(PhayzeHints.Count)];
             case "RogueBlastapopoulos":
-                return BlastapopoulosHints[new Random().Next(PhayzeHints.Count)];
+                return BlastapopoulosHints[new Random().Next(BlastapopoulosHints.Count)];
+            case "RogueDiamondback":
+	            return DiamondbackHints[new Random().Next(DiamondbackHints.Count)];
         }
 		return "Error Message Lol";
 	}

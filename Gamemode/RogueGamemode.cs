@@ -24,7 +24,7 @@ public abstract class RogueGamemode : ModGameMode {
 		this.gameModel = gameModel;
 	}
 
-	public virtual void OnMatchStart() { }
+	public override void OnMatchStart() { }
 
 	public virtual void OnRoundStart() { }
 

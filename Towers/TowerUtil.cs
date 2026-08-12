@@ -7,6 +7,7 @@ using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+#pragma warning disable CS8604 // Possible null reference argument.
 
 namespace BTD6Rogue;
 
@@ -49,9 +50,9 @@ public static class TowerUtil {
 		return enabledTowers;
 	}
 
-	public static TowerChoice[] GetTier0TowersChoiceData(RogueGame game)
+	public static TowerChoice?[] GetTier0TowersChoiceData(RogueGame game)
 	{
-		List<TowerChoice> towerChoices = new List<TowerChoice>();
+		List<TowerChoice?> towerChoices = new List<TowerChoice?>();
 
 		List<RogueTower> rogueTowers = GetEnabledRogueTowers(game);
 		foreach (RogueTower rogueTower in rogueTowers)
@@ -85,7 +86,7 @@ public static class TowerUtil {
 	public static TowerChoice[] CreateTowerChoiceDatas(RogueTower tower, int tier) { 
         List<TowerChoice> towerChoices = new List<TowerChoice>();
 
-        if (tower is RoguePowerProTower) { tier -= 2; if (tier > 3) { tier = 3; } }
+        //if (tower is RoguePowerProTower) { tier -= 2; if (tier > 3) { tier = 3; } }
 
         TowerModel path2Tower = tower.GetTower([0, tier, 0]);
 
@@ -107,12 +108,12 @@ public static class TowerUtil {
 			path2Name = path2Tower.GetUpgrade(1, tier).name;
 			path3Name = path3Tower.GetUpgrade(2, tier).name;
 		}
-		else if (tower is RoguePowerProTower)
+		/*else if (tower is RoguePowerProTower)
 		{
 			path1Name += " (Path 1)";
 			path2Name += " (Path 2)";
 			path3Name += " (Path 3)";
-		}
+		}*/
 
 		towerChoices.Add(new TowerChoice(tower.BaseTowerId, path1Name, tower.GetTowerAmount([tier, 0, 0]), [tier, 0, 0], tower, path1Tower.portrait, path1Tower));
 		towerChoices.Add(new TowerChoice(tower.BaseTowerId, path2Name, tower.GetTowerAmount([0, tier, 0]), [0, tier, 0], tower, path2Tower.portrait, path2Tower));
@@ -147,7 +148,7 @@ public static class TowerUtil {
 
 	public static TowerData CreateDataFromChoice(TowerChoice choiceData) {
 		int[] towerPaths = [Math.Max(choiceData.towerPaths[0], 2), Math.Max(choiceData.towerPaths[1], 2), Math.Max(choiceData.towerPaths[2], 2)];
-		if (choiceData.rogueTower is RoguePowerProTower) towerPaths = [Math.Max(choiceData.towerPaths[0], 0), Math.Max(choiceData.towerPaths[1], 0), Math.Max(choiceData.towerPaths[2], 0)];
+		//if (choiceData.rogueTower is RoguePowerProTower) towerPaths = [Math.Max(choiceData.towerPaths[0], 0), Math.Max(choiceData.towerPaths[1], 0), Math.Max(choiceData.towerPaths[2], 0)];
         TowerData towerData = new TowerData(choiceData.towerId, towerPaths, count: choiceData.towerAmount);
 		return towerData;
 	}

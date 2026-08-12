@@ -11,4 +11,5 @@ public class DynamiteBloon : RogueBloon {
 
     public override bool Camo => false;
     public override bool Regrow => false;
+    public override bool Elite => true;
 }

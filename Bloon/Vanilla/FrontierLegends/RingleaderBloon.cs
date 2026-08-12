@@ -11,4 +11,5 @@ public class RingleaderBloon : RogueBloon {
 
     public override bool Camo => false;
     public override bool Regrow => false;
+    public override bool Elite => false;
 }

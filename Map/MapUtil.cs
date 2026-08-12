@@ -60,6 +60,7 @@ public static class MapUtil {
 			ModContent.GetContent<Rake>()[0],
 			ModContent.GetContent<SpiceIslands>()[0],
 
+			ModContent.GetContent<Ascent>()[0],
 			ModContent.GetContent<MushroomGrotto>()[0],
 			ModContent.GetContent<PartyParade>()[0],
 			ModContent.GetContent<SunsetGulch>()[0],

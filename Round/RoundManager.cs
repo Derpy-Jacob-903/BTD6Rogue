@@ -24,56 +24,46 @@ public class RoundManager(InGame game) {
 
 	private int previousSpawn = 0;
 
-	public void BossSpawned() {
+	public async void BossSpawned() {
 		activeBoss = true;
 		previousSpawn = 5000; // MS until start spawning cashless bloons
         cashlessThread = new Thread(new ThreadStart(TrySpawnCashlessBloons));
-        cashlessThread.Start();
+		cashlessThread.Start();
     }
 
-	[Obsolete("This doesn't help/work.")]
-    public void KillCashlessBloonsThread()
+	/// <summary>
+	/// Try to 
+	/// </summary>
+	/// <returns>If the thread was killed</returns>
+    public bool KillCashlessBloonsThread()
     {
-		if (BTD6Rogue.rogueGame == null) { return; }
-        if (BTD6Rogue.rogueGame.roundManager == null) { return; }
+		if (BTD6Rogue.rogueGame == null) { return false; }
+        if (BTD6Rogue.rogueGame.roundManager == null) { return false; }
         Thread? thread = BTD6Rogue.rogueGame.roundManager.cashlessThread;
         if (thread != null && thread.IsAlive)
         {
-	        BTD6Rogue.rogueGame.roundManager = new RoundManager(null);
-            //BTD6Rogue.rogueGame.roundManager.activeBoss = false;
-			//if (!thread.Join(5000)) { BTD6Rogue.LogMessage("cashlessThread did not shut down in time. It may cause a crash next time a boss spawns.", "RoundManager.KillCashlessBloonsThread", ErrorLevels.Critical); }
+	        CancellationTokenSource cts = new CancellationTokenSource();
+	        CancellationToken token = cts.Token;
+	        cts.Cancel();
+	        thread.Join();
+	        cts.Dispose();
+	        BTD6Rogue.rogueGame.roundManager.cashlessThread = null;
+	        return true;
         }
-        //BTD6Rogue.rogueGame.roundManager.cashlessThread = null;
+        return false;
     }
 
     public void TrySpawnCashlessBloons() {
-		while (activeBoss )
+		while (activeBoss || IsBridgeSafe())
         {
-            //game = InGame.instance;
             Thread.Sleep(previousSpawn);
-            ///I FUCKING HATE THIS BUG HHHH
-            //if (!IsBridgeSafe()) { break; } //this just causes more proplums
-            /*if (!IsBridgeSafe()) { game = InGame.instance; } //this just causes more proplums
-            if (!IsBridgeSafe()) //TODO: dispose of RoundManager when we restart the run 
-            {
-	            BTD6Rogue.LogMessage(
-		            "TrySpawnCashlessBloons Thread is using a stale InGame instance. It WILL cause a crash next time a boss spawns.",
-		            "RoundManager.TrySpawnCashlessBloons", ErrorLevels.Critical);
-	            //throw new AccessViolationException("TrySpawnCashlessBloons Thread is using a stale InGame instance. It WILL cause a FATAL AccessViolationException next time a boss spawns.");
-	            break;
-            }*/
             if (!activeBoss) break;
             var currentGame = InGame.instance;
             if (currentGame == null || currentGame.bridge == null) break;
             game = currentGame;
             if (!IsBridgeSafe())
             {
-	            BTD6Rogue.LogMessage(
-		            "TrySpawnCashlessBloons Thread is using a stale InGame instance. Exiting thread to avoid a crash.",
-		            "RoundManager.TrySpawnCashlessBloons",
-		            ErrorLevels.Critical
-	            );
-	            break;
+	            KillCashlessBloonsThread();
             }
             int round = game.bridge.GetCurrentRound();
             int groupRbe = GetRoundRbe(round) / 15;
@@ -94,6 +84,7 @@ public class RoundManager(InGame game) {
 			game.bridge.SpawnBloons(bgm.GetEmissions(), round, 5000);
 			previousSpawn = nextIncrease * 3; // Change previous spawn timer based off the bloon group spawned just now
 		}
+		//KillCashlessBloonsThread();
     }
 
     public bool IsBridgeSafe()

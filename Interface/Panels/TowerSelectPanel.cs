@@ -23,7 +23,7 @@ public class TowerSelectPanel : RoguePanel {
 		ModHelperPanel borderPanel = parent.AddPanel(new Info("Border Panel") { AnchorMin = new (0.3f, 0.275f), AnchorMax = new Vector2(0.7f, 0.725f) }, VanillaSprites.BrownInsertPanelDark);
 		ModHelperPanel towerSelectPanel = borderPanel.AddPanel(new Info("Tower Select Panel", InfoPreset.FillParent), VanillaSprites.BrownInsertPanel, RectTransform.Axis.Vertical, 50, 50);
 
-		TowerChoice[] towerChoices = TowerUtil.GetTier0TowersChoiceData(BTD6Rogue.rogueGame);
+		TowerChoice?[] towerChoices = TowerUtil.GetTier0TowersChoiceData(BTD6Rogue.rogueGame);
 
 		int gridWidth = 6;
 
@@ -34,7 +34,7 @@ public class TowerSelectPanel : RoguePanel {
             if (i % gridWidth == 0) {
 				currentRow = towerSelectPanel.AddPanel(new Info("MapRow", InfoPreset.Flex), null, RectTransform.Axis.Horizontal, 50);
 			}
-            TowerChoice towerChoice = towerChoices[i];
+            TowerChoice towerChoice = towerChoices[i]!;
             if (towerChoice.rogueTower.SelectBlacklisted) { continue; }
             ModHelperButton button = currentRow.AddButton(new Info("Tower Button", InfoPreset.Flex), VanillaSprites.YellowBtn, new Action(() => ChooseTower(towerChoice)));
 			AspectRatioFitter arf = button.gameObject.AddComponent<AspectRatioFitter>();

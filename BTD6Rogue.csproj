@@ -35,6 +35,12 @@
       <None Include="Bloon\Bosses\Vanilla\LychTokens\Tombstone.cs" />
       <Compile Remove="Bloon\Bosses\Vanilla\Diamondback\DiamondbackBoss.cs" />
       <None Include="Bloon\Bosses\Vanilla\Diamondback\DiamondbackBoss.cs" />
+      <Compile Remove="Towers\Modded\Powers\BananaFarmerPro.cs" />
+      <None Include="Towers\Modded\Powers\BananaFarmerPro.cs" />
+      <Compile Remove="Towers\Modded\Powers\SuperMonkeyBeacon.cs" />
+      <None Include="Towers\Modded\Powers\SuperMonkeyBeacon.cs" />
+      <Compile Remove="Towers\Modded\Powers\RoguePowerProTower.cs" />
+      <None Include="Towers\Modded\Powers\RoguePowerProTower.cs" />
     </ItemGroup>
 
 	<Import Project="..\btd6.targets" />

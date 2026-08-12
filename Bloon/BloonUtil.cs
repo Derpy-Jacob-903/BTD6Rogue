@@ -49,7 +49,7 @@ public static class BloonUtil {
             }
             if (!found)
             {
-                BTD6Rogue.LogMessage($"The {j} Bloon was not found. It may cause a crash ingame.", typeof(BloonUtil), ErrorLevels.Debug);
+                BTD6Rogue.LogMessage($"The {j} Bloon was not found. It may cause a crash in-game.", typeof(BloonUtil), ErrorLevels.Debug);
             }
         }
     }

@@ -23,6 +23,9 @@ public abstract class RogueBloon : NamedModContent {
 	public virtual int BloonRbe => 1; // The "Red Bloon Equivalent" of the bloon
 	public virtual bool MoabClass => false;
     public virtual bool MoabClassMastery => false;
+    
+    public virtual bool Elite => false;
+    public virtual bool EliteMastery => false;
 
     // Whether the modifier can exist on the bloon
     // Ditto but for the Mastery mode (null uses the normal value)
